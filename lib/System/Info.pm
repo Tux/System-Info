@@ -2,7 +2,7 @@ package System::Info;
 use warnings;
 use strict;
 
-our $VERSION = "0.043";
+our $VERSION = "0.050";
 
 use base "Exporter";
 our @EXPORT_OK = qw( &sysinfo &si_uname );
@@ -54,7 +54,7 @@ working on.
 
 =head2 System::Info->new
 
-Factory method, with fallback to the information in C<< POSIX::uname() >>.
+Factory method, with fallback to the information in C<< POSIX::uname () >>.
 
 =cut
 
@@ -76,7 +76,7 @@ sub new {
     return System::Info::Generic->new;
     }
 
-=head2 sysinfo( )
+=head2 sysinfo
 
 C<sysinfo> returns a string with C<host>, C<os> and C<cpu_type>.
 

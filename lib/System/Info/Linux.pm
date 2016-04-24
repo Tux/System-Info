@@ -29,9 +29,9 @@ sub prepare_sysinfo {
         /sparc/ && do {$self->linux_sparc; last};
         # default
         $self->linux_generic;
-    }
+	}
     return $self;
-}
+    } # prepare_sysinfo
 
 =head2 $si->prepare_os
 
