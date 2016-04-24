@@ -1,0 +1,8 @@
+/contrib
+/cover_db
+blib/
+Makefile
+pm_to_blib
+tags
+*.swp
+MYMETA.*
