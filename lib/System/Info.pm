@@ -1,6 +1,7 @@
 package System::Info;
-use warnings;
+
 use strict;
+use warnings;
 
 our $VERSION = "0.050";
 
@@ -111,7 +112,9 @@ sub si_uname {
 
 1;
 
-=head1 COPYRIGHT
+__END__
+
+=head1 COPYRIGHT AND LICENSE
 
 (c) 2016-2016, Abe Timmerman & H.Merijn Brand All rights reserved.
 

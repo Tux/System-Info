@@ -54,7 +54,7 @@ The generic information is taken from C<< POSIX::uname() >>.
 
 =item $self->_hostname  => (POSIX::uname)[1]
 
-=item $self->_os        => join (" - " => (POSIX::uname)[0,2]
+=item $self->_os        => join " - " => (POSIX::uname)[0,2]
 
 =item $self->_osname    => (POSIX::uname)[0]
 
@@ -214,7 +214,9 @@ sub AUTOLOAD {
 
 1;
 
-=head1 COPYRIGHT
+__END__
+
+=head1 COPYRIGHT AND LICENSE
 
 (c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 

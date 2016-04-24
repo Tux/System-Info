@@ -63,10 +63,9 @@ sub _prepare_cpu_type {
     if ($parisc) {
         my (@cpu, $lst);
         chomp (my $model = `model`);
-        (my $m = $model) =~ s:.*/::;
-        local *LST; my $f;
-        foreach $f (qw( /usr/sam/lib/mo/sched.models
-                        /opt/langtools/lib/sched.models )) {
+        (my $m = $model) =~ s{.*/}{};
+        foreach my $f (qw( /usr/sam/lib/mo/sched.models
+			   /opt/langtools/lib/sched.models )) {
             if (open my $fh, "<", $f) {
                 @cpu = grep m/$m/i => <$fh>;
                 close $fh;
@@ -104,7 +103,7 @@ sub _prepare_cpu_type {
 	    }
 	elsif ($machinfo =~ m{\s*[0-9]+\s+(intel.r.*processor)\s*\(([0-9.]+)\s*([GM])Hz.*}mi) {
             my ($m, $s, $h) = ($1, $2, $3);
-            $m =~ s: series processor::;
+            $m =~ s{ series processor}{};
             $h eq "G" and $s = int ($s * 1024);
             $self->{__cpu} = "$m/$s";
 	    }
@@ -115,7 +114,9 @@ sub _prepare_cpu_type {
 
 1;
 
-=head1 COPYRIGHT
+__END__
+
+=head1 COPYRIGHT AND LICENSE
 
 (c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 

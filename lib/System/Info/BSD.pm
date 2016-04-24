@@ -46,7 +46,7 @@ sub __get_sysctl {
 
     my %extra  = (cpufrequency => undef, cpuspeed => undef);
     my @e_args = map {
-        /^hw\.(\w+)\s*[:=]/; $1
+        m/^hw\.(\w+)\s*[:=]/; $1
 	} grep m/^hw\.(\w+)/ && exists $extra{$1} => `$sysctl_cmd -a hw`;
 
     foreach my $name (qw( model machine ncpu ), @e_args) {
@@ -60,7 +60,9 @@ sub __get_sysctl {
 
 1;
 
-=head1 COPYRIGHT
+__END__
+
+=head1 COPYRIGHT AND LICENSE
 
 (c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 

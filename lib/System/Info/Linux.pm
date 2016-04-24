@@ -228,7 +228,7 @@ sub linux_generic {
 
     my @parts = ("model name", "vendor_id", "cpu mhz");
     my %info = map { ($_ => $self->from_cpuinfo ($_)) } @parts;
-    $self->{__cpu} = sprintf "%s (%s %.0fMHz)", map $info{$_} => @parts;
+    $self->{__cpu} = sprintf "%s (%s %.0fMHz)", map { $info{$_} } @parts;
 
     my $ncores = 0;
     for my $cores (grep m/cpu cores\s*:\s*\d+/ => $self->_proc_cpuinfo) {
@@ -298,7 +298,7 @@ sub linux_ppc {
         $info{machine} = $info{detected};
 	}
 
-    $self->{__cpu} = sprintf "%s %s (%s)", map $info{$_} => @parts;
+    $self->{__cpu} = sprintf "%s %s (%s)", map { $info{$_} } @parts;
     } # linux_ppc
 
 =head2 $si->linux_sparc
@@ -379,7 +379,9 @@ sub from_cpuinfo {
 
 1;
 
-=head1 COPYRIGHT
+__END__
+
+=head1 COPYRIGHT AND LICENSE
 
 (c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 

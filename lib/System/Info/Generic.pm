@@ -17,7 +17,9 @@ Just because it's ugly to have instances of the base class.
 
 1;
 
-=head1 COPYRIGHT
+__END__
+
+=head1 COPYRIGHT AND LICENSE
 
 (c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
