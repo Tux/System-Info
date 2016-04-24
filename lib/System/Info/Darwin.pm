@@ -38,7 +38,7 @@ sub prepare_sysinfo {
     $self->{__cpu_count} = $ncpu;
 
     return $self;
-    }
+    } # prepare_sysinfo
 
 sub __get_system_profiler {
     my $system_profiler_output = do {
@@ -73,7 +73,7 @@ sub __get_system_profiler {
         s/(0(?:\.\d+)?)\s*GHz/sprintf "%d MHz", $1 * 1000/e;
 
     return \%system_profiler;
-    }
+    } # __get_system_profiler
 
 1;
 

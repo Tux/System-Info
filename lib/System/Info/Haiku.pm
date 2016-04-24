@@ -2,7 +2,7 @@ package System::Info::Haiku;
 use warnings;
 use strict;
 
-use base 'System::Info::Base';
+use base "System::Info::Base";
 
 =head1 NAME
 
@@ -10,7 +10,7 @@ System::Info::Haiku - Object for specific Haiku info.
 
 =head1 DESCRIPTION
 
-=head2 $si->prepare_sysinfo()
+=head2 $si->prepare_sysinfo
 
 Use os-specific tools to find out more about the system.
 
@@ -18,30 +18,29 @@ Use os-specific tools to find out more about the system.
 
 sub prepare_sysinfo {
     my $self = shift;
-    $self->SUPER::prepare_sysinfo();
+    $self->SUPER::prepare_sysinfo;
 
     eval { local $^W = 0; require Haiku::SysInfo };
-    return $self if $@;
+    $@ and return $self;
 
-    my $hsi = Haiku::SysInfo->new();
+    my $hsi = Haiku::SysInfo->new;
     (my $cbs = $hsi->cpu_brand_string) =~ s/^\s+//;
-    $self->{__cpu_type}  = sprintf( "0x%x", $hsi->cpu_type );
+    $self->{__cpu_type}  = sprintf "0x%x", $hsi->cpu_type;
     $self->{__cpu}       = $cbs;
     $self->{__cpu_count} = $hsi->cpu_count;
 
-    $self->{__os}        = join(" - ",$hsi->kernel_name, $hsi->kernel_version);
+    $self->{__os}        = join " - " => $hsi->kernel_name, $hsi->kernel_version;
     return $self;
-}
+    } # prepare_sysinfo
 
 1;
 
 =head1 COPYRIGHT
 
-(c) 2002-2013, Abe Timmerman <abeltje@cpan.org> All rights reserved.
+(c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
-With contributions from Jarkko Hietaniemi, Merijn Brand, Campo
-Weijerman, Alan Burlison, Allen Smith, Alain Barbet, Dominic Dunlop,
-Rich Rauenzahn, David Cantrell.
+With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan Burlison,
+Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn, David Cantrell.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

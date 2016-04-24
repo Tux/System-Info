@@ -1,8 +1,9 @@
 package System::Info::AIX;
-use warnings;
-use strict;
 
-use base 'System::Info::Base';
+use strict;
+use warnings;
+
+use base "System::Info::Base";
 
 =head1 NAME
 
@@ -10,7 +11,7 @@ System::Info::AIX - Object for specific AIX info.
 
 =head1 DESCRIPTION
 
-=head2 $si->prepare_sysinfo()
+=head2 $si->prepare_sysinfo
 
 Use os-specific tools to find out more about the system.
 
@@ -18,37 +19,37 @@ Use os-specific tools to find out more about the system.
 
 sub prepare_sysinfo {
     my $self = shift;
-    $self->SUPER::prepare_sysinfo();
+    $self->SUPER::prepare_sysinfo;
 
     local $ENV{PATH} = "$ENV{PATH}:/usr/sbin";
-    $self->prepare_os();
+    $self->prepare_os;
 
-    my @lsdev = grep /Available/ => `lsdev -C -c processor -S Available`;
+    my @lsdev = grep m/Available/ => `lsdev -C -c processor -S Available`;
     $self->{__cpu_count} = scalar @lsdev;
 
-    my ($info) = grep /^\S+/ => @lsdev;
-    ($info) = $info =~ /^(\S+)/;
+    my ($info) = grep m/^\S+/ => @lsdev;
+    ($info) = $info =~ m/^(\S+)/;
     $info .= " -a 'state type'";
 
-    my ($cpu) = grep /\benable:[^:\s]+/ => `lsattr -E -O -l $info`;
-    ($cpu) = $cpu =~ /\benable:([^:\s]+)/;
+    my ($cpu) = grep m/\benable:[^:\s]+/ => `lsattr -E -O -l $info`;
+    ($cpu) = $cpu =~ m/\benable:([^:\s]+)/;
     $cpu =~ s/\bPowerPC(?=\b|_)/PPC/i;
 
     (my $cpu_type = $cpu) =~ s/_.*//;
-    $self->{__cpu} = $cpu;
+    $self->{__cpu}      = $cpu;
     $self->{__cpu_type} = $cpu_type;
 
-    my $os = $self->_os();
+    my $os = $self->_os;
     if ( $> == 0 ) {
-        chomp( my $k64 = `bootinfo -K 2>/dev/null` );
-        $k64 and $os .= "/$k64";
-        chomp( my $a64 = `bootinfo -y 2>/dev/null` );
+        chomp (my $k64 = `bootinfo -K 2>/dev/null`);
+        $k64 and $os       .= "/$k64";
+        chomp (my $a64 = `bootinfo -y 2>/dev/null`);
         $a64 and $cpu_type .= "/$a64";
-    }
+	}
     $self->{__os} = $os;
-}
+    } # prepare_sysinfo
 
-=head2 $si->prepare_os()
+=head2 $si->prepare_os
 
 Use os-specific tools to find out more about the operating system.
 
@@ -71,48 +72,47 @@ sub prepare_os {
 
     my $os = $self->_os;
     # First try the format used since 5.3ML05
-    chomp( $os = `oslevel -s` );
-    if ( $os =~ m/^(\d+)-(\d+)-(\d+)-(\d+)$/ && $1 >= 5300 ) {
+    chomp ($os = `oslevel -s`);
+    if ($os =~ m/^(\d+)-(\d+)-(\d+)-(\d+)$/ && $1 >= 5300) {
 	# 6100-09-03-1415 = AIX 6.1.0.0 TL09 SP03 (release 2014, week 15)
         # Which will show as AIX 6.1.0.0/TL09-03
-        $os = join(".", split //, $1) . "/TL$2-$3";
-    }
-    else {
-	chomp( $os = `oslevel -r` );
-	# 5300-12 = AIX 5.3.0.0/ML12
-	if ( $os =~ m/^(\d+)-(\d+)$/ ) {
-	    $os = join(".", split //, $1) . "/ML$2";
+        $os = join (".", split m// => $1) . "/TL$2-$3";
 	}
+    else {
+	chomp ($os = `oslevel -r`);
+	# 5300-12 = AIX 5.3.0.0/ML12
+	if ($os =~ m/^(\d+)-(\d+)$/) {
+	    $os = join (".", split // => $1) . "/ML$2";
+	    }
 	else {
-	    chomp( $os = `oslevel` );
+	    chomp ($os = `oslevel`);
 	    # 5.3.0.0 = AIX 5.3.0.0
 
 	    # And try figuring out at what maintainance level we are
 	    my $ml = "00";
-	    for ( grep m/ML\b/ => `instfix -i` ) {
+	    for (grep m/ML\b/ => `instfix -i`) {
 		if (m/All filesets for (\S+) were found/) {
 		    $ml = $1;
 		    $ml =~ m/^\d+-(\d+)_AIX_ML/ and $ml = "ML$1";
 		    next;
-		}
+		    }
 		$ml =~ s/\+*$/+/;
-	    }
+		}
 	    $os .= "/$ml";
+	    }
 	}
-    }
     $os =~ s/^/AIX - /;
     $self->{__os} = $os;
-}
+    } # prepare_os
 
 1;
 
 =head1 COPYRIGHT
 
-(c) 2002-2014, Abe Timmerman <abeltje@cpan.org> All rights reserved.
+(c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
-With contributions from Jarkko Hietaniemi, H.Merijn Brand, Campo
-Weijerman, Alan Burlison, Allen Smith, Alain Barbet, Dominic Dunlop,
-Rich Rauenzahn, David Cantrell.
+With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan Burlison,
+Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn, David Cantrell.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

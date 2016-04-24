@@ -1,8 +1,9 @@
 package System::Info::Generic;
-use warnings;
-use strict;
 
-use base 'System::Info::Base';
+use strict;
+use warnings;
+
+use base "System::Info::Base";
 
 =head1 NAME
 
@@ -18,11 +19,10 @@ Just because it's ugly to have instances of the base class.
 
 =head1 COPYRIGHT
 
-(c) 2002-2013, Abe Timmerman <abeltje@cpan.org> All rights reserved.
+(c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
-With contributions from Jarkko Hietaniemi, Merijn Brand, Campo
-Weijerman, Alan Burlison, Allen Smith, Alain Barbet, Dominic Dunlop,
-Rich Rauenzahn, David Cantrell.
+With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan Burlison,
+Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn, David Cantrell.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

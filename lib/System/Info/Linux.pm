@@ -199,7 +199,7 @@ sub prepare_os {
         $os .= " [$distro]";
 	}
     $self->{__os} = $os;
-    }
+    } # prepare_os
 
 =head2 $si->linux_generic
 

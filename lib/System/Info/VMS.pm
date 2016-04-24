@@ -1,8 +1,9 @@
 package System::Info::VMS;
-use warnings;
-use strict;
 
-use base 'System::Info::Base';
+use strict;
+use warnings;
+
+use base "System::Info::Base";
 
 use POSIX ();
 
@@ -12,7 +13,7 @@ System::Info::VMS - Object for specific VMS info.
 
 =head1 DESCRIPTION
 
-=head2 $si->prepare_sysinfo()
+=head2 $si->prepare_sysinfo
 
 Use os-specific tools to find out more about the system.
 
@@ -20,21 +21,21 @@ Use os-specific tools to find out more about the system.
 
 sub prepare_sysinfo {
     my $self = shift;
-    $self->SUPER::prepare_sysinfo();
+    $self->SUPER::prepare_sysinfo;
 
     my %map = (
-        __cpu       => 'HW_NAME',
-        __cpu_type  => 'ARCH_NAME',
-        __cpu_count => 'ACTIVECPU_CNT'
-    );
-    for my $key ( keys %map ) {
-        chomp( my $cmd_out = `write sys\$output f\$getsyi("$map{$key}")` );
+        __cpu       => "HW_NAME",
+        __cpu_type  => "ARCH_NAME",
+        __cpu_count => "ACTIVECPU_CNT",
+	);
+    for my $key (keys %map) {
+        chomp (my $cmd_out = `write sys\$output f\$getsyi("$map{$key}")`);
         $self->{$key} = $cmd_out;
-    }
+	}
     return $self;
-}
+    } # prepare_sysinfo
 
-=head2 $si->prepare_os()
+=head2 $si->prepare_os
 
 Use os-specific tools to find out more about the operating system.
 
@@ -43,20 +44,19 @@ Use os-specific tools to find out more about the operating system.
 sub prepare_os {
     my $self = shift;
 
-    my $os = join " - ", ( POSIX::uname() )[ 0, 3 ];
+    my $os = join " - " => (POSIX::uname ())[0, 3];
     $os =~ s/(\S+)/\L$1/;
     $self->{__os} = $os;
-}
+    } # prepare_os
 
 1;
 
 =head1 COPYRIGHT
 
-(c) 2002-2013, Abe Timmerman <abeltje@cpan.org> All rights reserved.
+(c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
-With contributions from Jarkko Hietaniemi, Merijn Brand, Campo
-Weijerman, Alan Burlison, Allen Smith, Alain Barbet, Dominic Dunlop,
-Rich Rauenzahn, David Cantrell.
+With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan Burlison,
+Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn, David Cantrell.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
