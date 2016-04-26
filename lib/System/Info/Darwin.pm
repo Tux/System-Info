@@ -5,6 +5,8 @@ use warnings;
 
 use base "System::Info::BSD";
 
+our $VERSION = "0.050";
+
 =head1 NAME
 
 System::Info::Darwin - Object for specific Darwin info.

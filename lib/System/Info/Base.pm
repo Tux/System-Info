@@ -5,6 +5,8 @@ use warnings;
 
 use POSIX ();
 
+our $VERSION = "0.050";
+
 =head1 NAME
 
 System::Info::Base - Baseclass for system information.

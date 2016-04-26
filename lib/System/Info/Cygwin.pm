@@ -7,6 +7,8 @@ use base "System::Info::Linux";
 
 use POSIX ();
 
+our $VERSION = "0.050";
+
 =head1 NAME
 
 System::Info::Cygwin - Object for specific Cygwin info.

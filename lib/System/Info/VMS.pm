@@ -7,6 +7,8 @@ use base "System::Info::Base";
 
 use POSIX ();
 
+our $VERSION = "0.050";
+
 =head1 NAME
 
 System::Info::VMS - Object for specific VMS info.

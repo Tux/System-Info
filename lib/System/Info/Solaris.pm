@@ -5,6 +5,8 @@ use warnings;
 
 use base "System::Info::Base";
 
+our $VERSION = "0.050";
+
 =head1 NAME
 
 System::Info::Solaris - Object for specific Solaris/Sun-os info.

@@ -5,6 +5,8 @@ use warnings;
 
 use base "System::Info::Base";
 
+our $VERSION = "0.050";
+
 =head1 NAME
 
 System::Info::HPUX - Object for specific HP-UX info.
