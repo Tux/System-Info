@@ -23,12 +23,12 @@ sub prepare_sysinfo {
     my $self = shift;
     $self->SUPER::prepare_sysinfo;
     $self->prepare_os;
-    return if !$self->prepare_proc_cpuinfo;
+    $self->prepare_proc_cpuinfo or return;
 
     for ($self->get_cpu_type) {
-        /arm/   && do {$self->linux_arm; last};
-        /ppc/   && do {$self->linux_ppc; last};
-        /sparc/ && do {$self->linux_sparc; last};
+        m/arm/   && do {$self->linux_arm;   last};
+        m/ppc/   && do {$self->linux_ppc;   last};
+        m/sparc/ && do {$self->linux_sparc; last};
         # default
         $self->linux_generic;
 	}
