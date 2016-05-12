@@ -1,6 +1,7 @@
-0.051	- 2016-04-28,  H.Merijn Brand
+0.051	- 2016-05-12,  H.Merijn Brand
 
     * Add DSM-6.0
+    * Test with perl 5.24.0
 
 0.050	- 2016-04-28,  H.Merijn Brand
 
