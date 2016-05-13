@@ -2,6 +2,7 @@
 ~$
 \.swp$
 .aspell.local.pws
+.releaserc
 .gitignore
 xt/
 klad/
