@@ -132,6 +132,9 @@ t/etc/mageia-4/mandrake-release
 t/etc/mageia-4/mandriva-release
 t/etc/mageia-4/os-release
 t/etc/mageia-4/redhat-release
+t/etc/nixos-16.09/DISTNAME
+t/etc/nixos-16.09/issue
+t/etc/nixos-16.09/os-release
 t/etc/netbsd-6.99.24/DISTNAME
 t/etc/netbsd-6.99.24/release
 t/etc/netbsd-7.99.4/DISTNAME

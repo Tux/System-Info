@@ -3,7 +3,7 @@ package System::Info;
 use strict;
 use warnings;
 
-our $VERSION = "0.052";
+our $VERSION = "0.053";
 
 use base "Exporter";
 our @EXPORT_OK = qw( &sysinfo &si_uname );

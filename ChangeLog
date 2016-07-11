@@ -1,3 +1,6 @@
+0.053	- 2016-07-11,  H.Merijn Brand
+    * Add tests for NixOS 16.09
+
 0.052	- 2016-07-11,  H.Merijn Brand
     * 0.051 had a version mismatch in the dist file
     * Add tests for CentOS-7.2
