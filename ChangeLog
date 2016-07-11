@@ -1,6 +1,7 @@
 0.053	- 2016-07-11,  H.Merijn Brand
     * Add tests for NixOS 16.09
     * Add tests for Fedora-23
+    * Add tests for OpenELEC-6.95.3 (7-beta)
 
 0.052	- 2016-07-11,  H.Merijn Brand
     * 0.051 had a version mismatch in the dist file

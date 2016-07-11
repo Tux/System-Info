@@ -111,6 +111,7 @@ sub prepare_os {
 		    }
 		}
 	    }
+        $distro =~ s{\s*[-:/,]\s*Version\s*:?\s*}{ };
         $distro =~ s/\)\s+\(\w+\)\s*$/)/;    # remove architectural part
         $distro =~ s/\s+\(?(?:i\d86|x86_64)\)?\s*$//; # i386 i486 i586 x86_64
 	}
