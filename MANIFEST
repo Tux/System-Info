@@ -180,6 +180,10 @@ t/etc/oracle-7.0/os-release
 t/etc/oracle-7.0/redhat-release
 t/etc/oracle-7.0/system-release
 t/etc/oracle-7.0/system-release-cpe
+t/etc/rasbian-8/debian_version
+t/etc/rasbian-8/DISTNAME
+t/etc/rasbian-8/issue
+t/etc/rasbian-8/os-release
 t/etc/rhel-4.2/DISTNAME
 t/etc/rhel-4.2/issue
 t/etc/rhel-4.2/redhat-release
