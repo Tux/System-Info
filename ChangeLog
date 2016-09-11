@@ -4,6 +4,7 @@
     * Add tests for OpenELEC-6.95.3 (7-beta)
     * Add tests for Fedora-14
     * Add tests for Rasbian-8
+    * Add tests for opensuse Tumbleweed
     * Use DISTRIB_RELEASE
 
 0.052	- 2016-07-11,  H.Merijn Brand
