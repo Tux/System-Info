@@ -26,13 +26,13 @@ sub prepare_sysinfo {
     $self->SUPER::prepare_sysinfo;
 
     my %map = (
-        __cpu       => "HW_NAME",
-        __cpu_type  => "ARCH_NAME",
-        __cpu_count => "ACTIVECPU_CNT",
+	__cpu       => "HW_NAME",
+	__cpu_type  => "ARCH_NAME",
+	__cpu_count => "ACTIVECPU_CNT",
 	);
     for my $key (keys %map) {
-        chomp (my $cmd_out = `write sys\$output f\$getsyi("$map{$key}")`);
-        $self->{$key} = $cmd_out;
+	chomp (my $cmd_out = `write sys\$output f\$getsyi("$map{$key}")`);
+	$self->{$key} = $cmd_out;
 	}
     return $self;
     } # prepare_sysinfo

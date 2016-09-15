@@ -28,14 +28,14 @@ sub prepare_sysinfo {
 	return $self->SUPER::prepare_sysinfo ();
 
     my $model = $system_profiler->{"Machine Name"} ||
-                $system_profiler->{"Machine Model"};
+		$system_profiler->{"Machine Model"};
 
     my $ncpu = $system_profiler->{"Number Of CPUs"};
     $system_profiler->{"Total Number Of Cores"} and
-        $ncpu .= " [$system_profiler->{'Total Number Of Cores'} cores]";
+	$ncpu .= " [$system_profiler->{'Total Number Of Cores'} cores]";
 
     $self->{__cpu_type}  = $system_profiler->{"CPU Type"}
-        if $system_profiler->{"CPU Type"};
+	if $system_profiler->{"CPU Type"};
     $self->{__cpu}       = "$model ($system_profiler->{'CPU Speed'})";
     $self->{__cpu_count} = $ncpu;
 
@@ -44,35 +44,35 @@ sub prepare_sysinfo {
 
 sub __get_system_profiler {
     my $system_profiler_output = do {
-        local $^W = 0;
+	local $^W = 0;
 	`/usr/sbin/system_profiler -detailLevel mini SPHardwareDataType`;
 	} or return;
 
     my %system_profiler;
     $system_profiler{$1} = $2
-        while $system_profiler_output =~ m/^\s*([\w ]+):\s+(.+)$/gm;
+	while $system_profiler_output =~ m/^\s*([\w ]+):\s+(.+)$/gm;
 
     # convert newer output from Intel core duo
     my %keymap = (
-        "Processor Name"        => "CPU Type",
-        "Processor Speed"       => "CPU Speed",
-        "Model Name"            => "Machine Name",
-        "Model Identifier"      => "Machine Model",
-        "Number Of Processors"  => "Number Of CPUs",
-        "Number of Processors"  => "Number Of CPUs",
-        "Total Number of Cores" => "Total Number Of Cores",
+	"Processor Name"        => "CPU Type",
+	"Processor Speed"       => "CPU Speed",
+	"Model Name"            => "Machine Name",
+	"Model Identifier"      => "Machine Model",
+	"Number Of Processors"  => "Number Of CPUs",
+	"Number of Processors"  => "Number Of CPUs",
+	"Total Number of Cores" => "Total Number Of Cores",
 	);
     for my $newkey (keys %keymap) {
-        my $oldkey = $keymap{$newkey};
-        if (exists $system_profiler{$newkey}) {
-            $system_profiler{$oldkey} = delete $system_profiler{$newkey};
+	my $oldkey = $keymap{$newkey};
+	if (exists $system_profiler{$newkey}) {
+	    $system_profiler{$oldkey} = delete $system_profiler{$newkey};
 	    }
 	}
 
     $system_profiler{"CPU Type"} ||= "Unknown";
     $system_profiler{"CPU Type"}   =~ s/PowerPC\s*(\w+).*/macppc$1/;
     $system_profiler{"CPU Speed"}  =~
-        s/(0(?:\.\d+)?)\s*GHz/sprintf "%d MHz", $1 * 1000/e;
+	s/(0(?:\.\d+)?)\s*GHz/sprintf "%d MHz", $1 * 1000/e;
 
     return \%system_profiler;
     } # __get_system_profiler

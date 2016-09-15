@@ -43,10 +43,10 @@ sub prepare_sysinfo {
 
     my $os = $self->_os;
     if ( $> == 0 ) {
-        chomp (my $k64 = `bootinfo -K 2>/dev/null`);
-        $k64 and $os       .= "/$k64";
-        chomp (my $a64 = `bootinfo -y 2>/dev/null`);
-        $a64 and $cpu_type .= "/$a64";
+	chomp (my $k64 = `bootinfo -K 2>/dev/null`);
+	$k64 and $os       .= "/$k64";
+	chomp (my $a64 = `bootinfo -y 2>/dev/null`);
+	$a64 and $cpu_type .= "/$a64";
 	}
     $self->{__os} = $os;
     } # prepare_sysinfo
@@ -77,8 +77,8 @@ sub prepare_os {
     chomp ($os = `oslevel -s`);
     if ($os =~ m/^(\d+)-(\d+)-(\d+)-(\d+)$/ && $1 >= 5300) {
 	# 6100-09-03-1415 = AIX 6.1.0.0 TL09 SP03 (release 2014, week 15)
-        # Which will show as AIX 6.1.0.0/TL09-03
-        $os = join (".", split m// => $1) . "/TL$2-$3";
+	# Which will show as AIX 6.1.0.0/TL09-03
+	$os = join (".", split m// => $1) . "/TL$2-$3";
 	}
     else {
 	chomp ($os = `oslevel -r`);

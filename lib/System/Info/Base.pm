@@ -193,11 +193,11 @@ Just a backward compatible way to dump the object (for test suite).
 sub old_dump {
     my $self = shift;
     return {
-        _cpu      => $self->cpu,
-        _cpu_type => $self->cpu_type,
-        _ncpu     => $self->ncpu,
-        _os       => $self->os,
-        _host     => $self->host,
+	_cpu      => $self->cpu,
+	_cpu_type => $self->cpu_type,
+	_ncpu     => $self->ncpu,
+	_os       => $self->os,
+	_host     => $self->host,
 	};
     }
 
@@ -208,9 +208,9 @@ sub AUTOLOAD {
 
     (my $attrib = our $AUTOLOAD) =~ s/.*:://;
     if (exists $self->{"_$attrib"}) {
-        ref $self->{"_$attrib"} eq "ARRAY" and
-            return @{ $self->{"_$attrib"} };
-        return $self->{"_$attrib"};
+	ref $self->{"_$attrib"} eq "ARRAY" and
+	    return @{ $self->{"_$attrib"} };
+	return $self->{"_$attrib"};
 	}
     }
 

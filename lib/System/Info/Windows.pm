@@ -28,8 +28,8 @@ sub prepare_sysinfo {
     my $envinfo = __get_environment_sysinfo ();
 
     for my $key (qw/__cpu_type __cpu __cpu_count/) {
-        my $value = $reginfo->{$key} || $envinfo->{$key};
-        $value and $self->{$key} = $value;
+	my $value = $reginfo->{$key} || $envinfo->{$key};
+	$value and $self->{$key} = $value;
 	}
     return $self;
     } # prepare_sysinfo
@@ -58,10 +58,10 @@ sub __get_registry_sysinfo {
 
     Win32::TieRegistry->import;
     my $Registry = $Win32::TieRegistry::Registry->Open (
-        "", { Access => 0x2000000 });
+	"", { Access => 0x2000000 });
 
     my $basekey = join "\\" =>
-        qw(LMachine HARDWARE DESCRIPTION System CentralProcessor);
+	qw(LMachine HARDWARE DESCRIPTION System CentralProcessor);
 
     my $pnskey = "$basekey\\0\\ProcessorNameString";
     my $cpustr = $Registry->{$pnskey};
@@ -79,17 +79,17 @@ sub __get_registry_sysinfo {
     my ($cpu_type) = $Registry->{$idkey} =~ /^(\S+)/;
 
     return {
-        __cpu_type  => $cpu_type,
-        __cpu       => $cpu,
-        __cpu_count => $ncpu,
+	__cpu_type  => $cpu_type,
+	__cpu       => $cpu,
+	__cpu_count => $ncpu,
 	};
     } # __get_registry_sysinfo
 
 sub __get_environment_sysinfo {
     return {
-        __cpu_type  => $ENV{PROCESSOR_ARCHITECTURE},
-        __cpu       => $ENV{PROCESSOR_IDENTIFIER},
-        __cpu_count => $ENV{NUMBER_OF_PROCESSORS},
+	__cpu_type  => $ENV{PROCESSOR_ARCHITECTURE},
+	__cpu       => $ENV{PROCESSOR_IDENTIFIER},
+	__cpu_count => $ENV{NUMBER_OF_PROCESSORS},
 	};
     } # __get_environment_sysinfo
 

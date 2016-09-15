@@ -16,8 +16,8 @@ require System::Info::Darwin;
 
 my %output = (
     mini_intel => {
-        uname  => "Mac mini (1.83 GHz) 1 [2 cores] Intel Core Duo",
-        output => <<"__EOOUT__" },
+	uname  => "Mac mini (1.83 GHz) 1 [2 cores] Intel Core Duo",
+	output => <<"__EOOUT__" },
 Hardware:
     Hardware Overview:
       Model Name: Mac mini
@@ -34,8 +34,8 @@ Hardware:
 __EOOUT__
 
     ibook_g4 => {
-        uname  => "iBook G4 (1.07 GHz) 1 macppcG4",
-        output => <<"__EOOUT__" },
+	uname  => "iBook G4 (1.07 GHz) 1 macppcG4",
+	output => <<"__EOOUT__" },
 Hardware:
 
     Hardware Overview:
@@ -52,8 +52,8 @@ Hardware:
 __EOOUT__
 
     macbook_pro => {
-        uname  => "MacBook Pro (2.4 GHz) 1 [2 cores] Intel Core 2 Duo",
-        output => <<"__EOOUT__" },
+	uname  => "MacBook Pro (2.4 GHz) 1 [2 cores] Intel Core 2 Duo",
+	output => <<"__EOOUT__" },
 Hardware:
 
     Hardware Overview:
@@ -70,7 +70,7 @@ Hardware:
       Boot ROM Version: MBP71.0039.B0B
       SMC Version (system): 1.62f7
       Sudden Motion Sensor:
-          State: Enabled
+	  State: Enabled
 __EOOUT__
     );
 
@@ -79,8 +79,8 @@ sub fake_qx {
     $DEBUG and cluck ("<$_[0]>");
 
     $_[0] =~ m{/usr/sbin/system_profiler}
-        ? $OUTPUT
-        : CORE::readpipe ($_[0]);
+	? $OUTPUT
+	: CORE::readpipe ($_[0]);
     } # fake_qx
 
 BEGIN { *CORE::GLOBAL::readpipe = \&fake_qx }

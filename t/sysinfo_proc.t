@@ -11,29 +11,29 @@ BEGIN {
 
     our $tux = 0; # Counter for unique GLOBrefs
     *CORE::GLOBAL::open = sub (*;$@) {
-        my ($handle, $second, @args) = @_;
-        my ($pkg) = caller;
-        if (defined $handle && !ref $handle) {
-            no strict "refs";
-            $handle = \*{ "$pkg\:\:$handle" };
+	my ($handle, $second, @args) = @_;
+	my ($pkg) = caller;
+	if (defined $handle && !ref $handle) {
+	    no strict "refs";
+	    $handle = \*{ "$pkg\:\:$handle" };
 	    }
-        elsif (!defined $handle) {    # undefined scalar, provide GLOBref
-            $_[0] = $handle = do {
-                no strict "refs";
-                \*{ sprintf "%s::TUX%06d", $pkg, $tux++ };
+	elsif (!defined $handle) {    # undefined scalar, provide GLOBref
+	    $_[0] = $handle = do {
+		no strict "refs";
+		\*{ sprintf "%s::TUX%06d", $pkg, $tux++ };
 		};
 	    }
-        CORE::open ($handle, $second, @args);
+	CORE::open ($handle, $second, @args);
 	};
 
     *CORE::GLOBAL::close = sub (*) {
-        my ($handle) = @_;
-        unless (ref $handle) {
-            my ($pkg) = caller;
-            no strict "refs";
-            $handle = *{ "$pkg\:\:$handle" };
+	my ($handle) = @_;
+	unless (ref $handle) {
+	    my ($pkg) = caller;
+	    no strict "refs";
+	    $handle = *{ "$pkg\:\:$handle" };
 	    }
-        CORE::close ($handle);
+	CORE::close ($handle);
 	};
     }
 
@@ -47,44 +47,44 @@ my $this_system = System::Info::Generic->new;
     # redefine the CORE functions only locally
     local $^W; # no warnings "redefine";
     local *CORE::GLOBAL::open = sub (*;$@) {
-        local $^W = 1;
+	local $^W = 1;
 
-        my ($handle, $second, @args) = @_;
-        my ($pkg) = caller;
-        if (defined $handle && !ref $handle) {
-            no strict "refs";
-            $handle = \*{"$pkg\:\:$handle"};
+	my ($handle, $second, @args) = @_;
+	my ($pkg) = caller;
+	if (defined $handle && !ref $handle) {
+	    no strict "refs";
+	    $handle = \*{"$pkg\:\:$handle"};
 	    }
-        elsif (!defined $handle) {    # undefined scalar, provide GLOBref
-            $_[0] = $handle = do {
-                no strict "refs";
-                \*{ sprintf "%s::TUX%06d", $pkg, our $tux++ };
+	elsif (!defined $handle) {    # undefined scalar, provide GLOBref
+	    $_[0] = $handle = do {
+		no strict "refs";
+		\*{ sprintf "%s::TUX%06d", $pkg, our $tux++ };
 		};
 	    }
 
-        if ($second eq "<" && $args[0] eq "/proc/cpuinfo") {
-            shift @args;
+	if ($second eq "<" && $args[0] eq "/proc/cpuinfo") {
+	    shift @args;
 
-            my $fn = $::CPU_TYPE;
+	    my $fn = $::CPU_TYPE;
 
-            # we can do this fully qualified filehandle as we only use GLOBs
-            # to keep up with 5.005xx
-            no strict "refs";
-            tie *$handle, "ReadProc", $files{$fn};
+	    # we can do this fully qualified filehandle as we only use GLOBs
+	    # to keep up with 5.005xx
+	    no strict "refs";
+	    tie *$handle, "ReadProc", $files{$fn};
 	    }
-        else {
-            CORE::open ($handle, $second, @args);
+	else {
+	    CORE::open ($handle, $second, @args);
 	    }
 	};
     local *CORE::GLOBAL::close = sub (*) {
-        my ($pkg) = caller;
-        no strict "refs";
-        tied $_[0] and untie *{ "$pkg\:\:$_[0]" };
+	my ($pkg) = caller;
+	no strict "refs";
+	tied $_[0] and untie *{ "$pkg\:\:$_[0]" };
 	};
 
     *System::Info::Base::get_cpu_type = sub {
-        my $self = shift;
-        return $self->{__cpu_type} = $::CPU_TYPE;
+	my $self = shift;
+	return $self->{__cpu_type} = $::CPU_TYPE;
 	};
     $^W = 1;
 
@@ -93,11 +93,11 @@ my $this_system = System::Info::Generic->new;
     $this_system->{_os} = $i386->_os;
 
     is_deeply $i386->old_dump, {
-        _host     => $this_system->host,
-        _os       => $this_system->os,
-        _cpu_type => $CPU_TYPE,
-        _cpu      => "AMD Athlon(tm) 64 Processor 3200+ (AuthenticAMD 1000MHz)",
-        _ncpu     => 1,
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => $CPU_TYPE,
+	_cpu      => "AMD Athlon(tm) 64 Processor 3200+ (AuthenticAMD 1000MHz)",
+	_ncpu     => 1,
 	}, "Read /proc/cpuinfo for i386";
 #
 
@@ -105,11 +105,11 @@ my $this_system = System::Info::Generic->new;
     my $ppc = System::Info::Linux->new;
 
     is_deeply $ppc->old_dump, {
-        _host     => $this_system->host,
-        _os       => $this_system->os,
-        _cpu_type => "ppc",
-        _cpu      => "7400, altivec supported PowerMac G4 (400.000000MHz)",
-        _ncpu     => 1,
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => "ppc",
+	_cpu      => "7400, altivec supported PowerMac G4 (400.000000MHz)",
+	_ncpu     => 1,
 	}, "Read /proc/cpuinfo for ppc";
 
     $CPU_TYPE = "i386_2";
@@ -117,11 +117,11 @@ my $this_system = System::Info::Generic->new;
     my $i386_2 = System::Info::Linux->new;
 
     is_deeply $i386_2->old_dump, {
-        _host     => $this_system->host,
-        _os       => $this_system->os,
-        _cpu_type => "i386_2",
-        _cpu      => "Intel(R) Core(TM)2 CPU T5600 @ 1.83GHz (GenuineIntel 1000MHz)",
-        _ncpu     => "2 [4 cores]",
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => "i386_2",
+	_cpu      => "Intel(R) Core(TM)2 CPU T5600 @ 1.83GHz (GenuineIntel 1000MHz)",
+	_ncpu     => "2 [4 cores]",
 	}, "Read /proc/cpuinfo for duo i386";
 
     $CPU_TYPE = "arm_v6";
@@ -129,11 +129,11 @@ my $this_system = System::Info::Generic->new;
     my $arm_v6 = System::Info::Linux->new;
 
     is_deeply $arm_v6->old_dump, {
-        _host     => $this_system->host,
-        _os       => $this_system->os,
-        _cpu_type => "arm_v6",
-        _cpu      => "ARMv6-compatible processor rev 7 (v6l) (700 MHz)",
-        _ncpu     => 1,
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => "arm_v6",
+	_cpu      => "ARMv6-compatible processor rev 7 (v6l) (700 MHz)",
+	_ncpu     => 1,
 	}, "Read /proc/cpuinfo for ARM v6";
 
     $CPU_TYPE = "arm_v7";
@@ -141,22 +141,22 @@ my $this_system = System::Info::Generic->new;
     my $arm_v7 = System::Info::Linux->new;
 
     is_deeply $arm_v7->old_dump, {
-        _host     => $this_system->host,
-        _os       => $this_system->os,
-        _cpu_type => "arm_v7",
-        _cpu      => "ARMv7 Processor rev 2 (v7l) (300 MHz)",
-        _ncpu     => 1,
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => "arm_v7",
+	_cpu      => "ARMv7 Processor rev 2 (v7l) (300 MHz)",
+	_ncpu     => 1,
 	}, "Read /proc/cpuinfo for ARM v6";
 
     $CPU_TYPE = "i386_16";
     my $i386_16 = System::Info::Linux->new;
 
     is_deeply $i386_16->old_dump, {
-        _host     => $this_system->host,
-        _os       => $this_system->os,
-        _cpu_type => $CPU_TYPE,
-        _cpu      => "Intel(R) Xeon(R) CPU L5520 @ 2.27GHz (GenuineIntel 2268MHz)",
-        _ncpu     => "16 [64 cores]",
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => $CPU_TYPE,
+	_cpu      => "Intel(R) Xeon(R) CPU L5520 @ 2.27GHz (GenuineIntel 2268MHz)",
+	_ncpu     => "16 [64 cores]",
 	}, "Read /proc/cpuinfo for i386/16";
     }
 
@@ -714,9 +714,9 @@ sub READLINE {
     my $buffer = shift;
     length $$buffer or return;
     if (wantarray) {
-        my @list = map "$_\n" => split m/\n/, $$buffer;
-        $$buffer = "";
-        return @list;
+	my @list = map "$_\n" => split m/\n/, $$buffer;
+	$$buffer = "";
+	return @list;
 	}
 
     $$buffer =~ s/^(.*\n?)// and return $1;

@@ -86,8 +86,8 @@ C<sysinfo> returns a string with C<host>, C<os> and C<cpu_type>.
 sub sysinfo {
     my $si = System::Info->new;
     my @fields = $_[0]
-        ? qw( host os cpu ncpu cpu_type )
-        : qw( host os cpu_type );
+	? qw( host os cpu ncpu cpu_type )
+	: qw( host os cpu_type );
     return join " ", @{ $si }{ map "_$_" => @fields };
     } # sysinfo
 

@@ -26,11 +26,11 @@ sub prepare_sysinfo {
     $self->prepare_proc_cpuinfo or return;
 
     for ($self->get_cpu_type) {
-        m/arm/   && do {$self->linux_arm;   last};
-        m/ppc/   && do {$self->linux_ppc;   last};
-        m/sparc/ && do {$self->linux_sparc; last};
-        # default
-        $self->linux_generic;
+	m/arm/   && do {$self->linux_arm;   last};
+	m/ppc/   && do {$self->linux_ppc;   last};
+	m/sparc/ && do {$self->linux_sparc; last};
+	# default
+	$self->linux_generic;
 	}
     return $self;
     } # prepare_sysinfo
@@ -45,19 +45,19 @@ sub _file_info {
     my ($file, $os) = @_;
     open my $fh, "<", $file or return;
     while (<$fh>) {
-        m/^\s*[;#]/ and next;
-        chomp;
-        m/\S/ or next;
-        s/^\s+//;
-        s/\s+$//;
-        if (my ($k, $v) = (m/^(.*\S)\s*=\s*(\S.*)$/)) {
-            # Having a value prevails over being defined
-            defined $os->{$k} and next;
-            $v =~ s/^"\s*(.*?)\s*"$/$1/;
-            $os->{$k} = $v;
-            next;
+	m/^\s*[;#]/ and next;
+	chomp;
+	m/\S/ or next;
+	s/^\s+//;
+	s/\s+$//;
+	if (my ($k, $v) = (m/^(.*\S)\s*=\s*(\S.*)$/)) {
+	    # Having a value prevails over being defined
+	    defined $os->{$k} and next;
+	    $v =~ s/^"\s*(.*?)\s*"$/$1/;
+	    $os->{$k} = $v;
+	    next;
 	    }
-        exists $os->{$_} or $os->{$_} = undef;
+	exists $os->{$_} or $os->{$_} = undef;
 	}
     close $fh;
     } # _file_info
@@ -67,32 +67,32 @@ sub prepare_os {
 
     my $etc = $ENV{SMOKE_USE_ETC} || "/etc";
     my @dist_file = grep { -f $_ && -s _ } map {
-        -d $_ ? glob ("$_/*") : ($_)
+	-d $_ ? glob ("$_/*") : ($_)
 	} glob ("$etc/*[-_][rRvV][eE][lLrR]*"), "$etc/issue",
-                "$etc.defaults/VERSION", "$etc/VERSION", "$etc/release"
+		"$etc.defaults/VERSION", "$etc/VERSION", "$etc/release"
 	or return;
 
     my $os = $self->_os;
     my %os;
     my $distro;
     foreach my $df (@dist_file) {
-        # use "debian" out of /etc/debian-release
-        unless (defined $distro or $df =~ m/\blsb-/) {
-            ($distro = $df) =~ s{^$etc(?:\.defaults)?/}{}i;
-            $distro =~ s{[-_]?(?:release|version)\b}{}i;
+	# use "debian" out of /etc/debian-release
+	unless (defined $distro or $df =~ m/\blsb-/) {
+	    ($distro = $df) =~ s{^$etc(?:\.defaults)?/}{}i;
+	    $distro =~ s{[-_]?(?:release|version)\b}{}i;
 	    }
-        _file_info ($df, \%os);
+	_file_info ($df, \%os);
 	}
     foreach my $key (keys %os) {
-        my $KEY = uc $key;
-        defined $os{$key} or next;
-        exists $os{$KEY} or $os{$KEY} = $os{$key};
+	my $KEY = uc $key;
+	defined $os{$key} or next;
+	exists $os{$KEY} or $os{$KEY} = $os{$key};
 	}
 
     if ($os{DISTRIB_DESCRIPTION}) {
-        $distro = $os{DISTRIB_DESCRIPTION};
-        $os{DISTRIB_CODENAME} && $distro !~ m{\b$os{DISTRIB_CODENAME}\b}i and
-            $distro .= " ($os{DISTRIB_CODENAME})";
+	$distro = $os{DISTRIB_DESCRIPTION};
+	$os{DISTRIB_CODENAME} && $distro !~ m{\b$os{DISTRIB_CODENAME}\b}i and
+	    $distro .= " ($os{DISTRIB_CODENAME})";
 	if ($os{VERSION_ID} && $distro !~ m{\b$os{VERSION_ID}\b}i) {
 	    $distro .= " $os{VERSION_ID}";
 	    }
@@ -101,15 +101,15 @@ sub prepare_os {
 	    }
 	}
     elsif ($os{PRETTY_NAME}) {
-        $distro = $os{PRETTY_NAME};          # "openSUSE 12.1 (Asparagus) (x86_64)"
-        if (my $vid = $os{VERSION_ID}) {     # wheezy 7 => 7.2
-            my @rv;
-            if (@rv = grep m{^$vid\.} => sort keys %os) {
-                # from /etc/debian_version
-                $rv[0] =~ m/^[0-9]+\.\w+$/ and
-                    $distro =~ s/\b$vid\b/$rv[0]/;
+	$distro = $os{PRETTY_NAME};          # "openSUSE 12.1 (Asparagus) (x86_64)"
+	if (my $vid = $os{VERSION_ID}) {     # wheezy 7 => 7.2
+	    my @rv;
+	    if (@rv = grep m{^$vid\.} => sort keys %os) {
+		# from /etc/debian_version
+		$rv[0] =~ m/^[0-9]+\.\w+$/ and
+		    $distro =~ s/\b$vid\b/$rv[0]/;
 		}
-            if (!@rv && defined $os{NAME} and # CentOS Linux 7 = CentOS Linux 7.1.1503
+	    if (!@rv && defined $os{NAME} and # CentOS Linux 7 = CentOS Linux 7.1.1503
 		 @rv = grep m{^$os{NAME} (?:(?:release|version)\s+)?$vid\.} => sort keys %os) {
 		if ($rv[0] =~ m/\s($vid\.[-.\w]+)/) {
 		    my $vr = $1;
@@ -117,95 +117,95 @@ sub prepare_os {
 		    }
 		}
 	    }
-        $distro =~ s{\s*[-:/,]\s*Version\s*:?\s*}{ };
-        $distro =~ s/\)\s+\(\w+\)\s*$/)/;    # remove architectural part
-        $distro =~ s/\s+\(?(?:i\d86|x86_64)\)?\s*$//; # i386 i486 i586 x86_64
+	$distro =~ s{\s*[-:/,]\s*Version\s*:?\s*}{ };
+	$distro =~ s/\)\s+\(\w+\)\s*$/)/;    # remove architectural part
+	$distro =~ s/\s+\(?(?:i\d86|x86_64)\)?\s*$//; # i386 i486 i586 x86_64
 	}
     elsif ($os{VERSION} && $os{NAME}) {
-        $distro = qq{$os{NAME} $os{VERSION}};
+	$distro = qq{$os{NAME} $os{VERSION}};
 	}
     elsif ($os{VERSION} && $os{CODENAME}) {
-        if (my @welcome = grep s{^\s*Welcome\s+to\s+(\S*$distro\S*)\b.*}{$1}i => keys %os) {
-            $distro = $welcome[0];
+	if (my @welcome = grep s{^\s*Welcome\s+to\s+(\S*$distro\S*)\b.*}{$1}i => keys %os) {
+	    $distro = $welcome[0];
 	    }
 	$distro .= qq{ $os{VERSION}};
-        $distro =~ m/\b$os{CODENAME}\b/ or
+	$distro =~ m/\b$os{CODENAME}\b/ or
 	    $distro .= qq{ ($os{CODENAME})};
 	}
     elsif ($os{MAJORVERSION} && defined $os{MINORVERSION}) {
-        -d "/usr/syno" || "@dist_file" =~ m{^\S*/VERSION$} and $distro .= "DSM";
-        $distro .= qq{ $os{MAJORVERSION}.$os{MINORVERSION}};
-        $os{BUILDNUMBER}    and $distro .= qq{-$os{BUILDNUMBER}};
-        $os{SMALLFIXNUMBER} and $distro .= qq{-$os{SMALLFIXNUMBER}};
+	-d "/usr/syno" || "@dist_file" =~ m{^\S*/VERSION$} and $distro .= "DSM";
+	$distro .= qq{ $os{MAJORVERSION}.$os{MINORVERSION}};
+	$os{BUILDNUMBER}    and $distro .= qq{-$os{BUILDNUMBER}};
+	$os{SMALLFIXNUMBER} and $distro .= qq{-$os{SMALLFIXNUMBER}};
 	}
     elsif ($os{DISTRIBVER} && exists $os{NETBSDSRCDIR}) {
-        (my $dv = $os{DISTRIBVER}) =~ tr{ ''"";}{}d;
-        $distro .= qq{ NetBSD $dv};
+	(my $dv = $os{DISTRIBVER}) =~ tr{ ''"";}{}d;
+	$distro .= qq{ NetBSD $dv};
 	}
     else {
-        # /etc/issue:
-        #  Welcome to SUSE LINUX 10.0 (i586) - Kernel \r (\l).
-        #  Welcome to openSUSE 10.2 (i586) - Kernel \r (\l).
-        #  Welcome to openSUSE 10.2 (X86-64) - Kernel \r (\l).
-        #  Welcome to openSUSE 10.3 (i586) - Kernel \r (\l).
-        #  Welcome to openSUSE 10.3 (X86-64) - Kernel \r (\l).
-        #  Welcome to openSUSE 11.1 - Kernel \r (\l).
-        #  Welcome to openSUSE 11.2 "Emerald" - Kernel \r (\l).
-        #  Welcome to openSUSE 11.3 "Teal" - Kernel \r (\l).
-        #  Welcome to openSUSE 11.4 "Celadon" - Kernel \r (\l).
-        #  Welcome to openSUSE 12.1 "Asparagus" - Kernel \r (\l).
-        #  Welcome to openSUSE 12.2 "Mantis" - Kernel \r (\l).
-        #  Welcome to openSUSE 12.3 "Dartmouth" - Kernel \r (\l).
-        #  Welcome to openSUSE 13.1 "Bottle" - Kernel \r (\l).
-        #  Welcome to openSUSE 13.2 "Harlequin" - Kernel \r (\l).
-        #  Welcome to openSUSE Leap 42.1 - Kernel \r (\l).
-        #  Welcome to openSUSE 20151218 "Tumbleweed" - Kernel \r (\l).
-        #  Welcome to SUSE Linux Enterprise Server 11 SP1 for VMware  (x86_64) - Kernel \r (\l).
-        #  Ubuntu 10.04.4 LTS \n \l
-        #  Debian GNU/Linux wheezy/sid \n \l
-        #  Debian GNU/Linux 6.0 \n \l
-        #  CentOS release 6.4 (Final)
-        # /etc/redhat-release:
-        #  CentOS release 5.7 (Final)
-        #  CentOS release 6.4 (Final)
-        #  Red Hat Enterprise Linux ES release 4 (Nahant Update 2)
-        # /etc/debian_version:
-        #  6.0.4
-        #  wheezy/sid
-        #  squeeze/sid
+	# /etc/issue:
+	#  Welcome to SUSE LINUX 10.0 (i586) - Kernel \r (\l).
+	#  Welcome to openSUSE 10.2 (i586) - Kernel \r (\l).
+	#  Welcome to openSUSE 10.2 (X86-64) - Kernel \r (\l).
+	#  Welcome to openSUSE 10.3 (i586) - Kernel \r (\l).
+	#  Welcome to openSUSE 10.3 (X86-64) - Kernel \r (\l).
+	#  Welcome to openSUSE 11.1 - Kernel \r (\l).
+	#  Welcome to openSUSE 11.2 "Emerald" - Kernel \r (\l).
+	#  Welcome to openSUSE 11.3 "Teal" - Kernel \r (\l).
+	#  Welcome to openSUSE 11.4 "Celadon" - Kernel \r (\l).
+	#  Welcome to openSUSE 12.1 "Asparagus" - Kernel \r (\l).
+	#  Welcome to openSUSE 12.2 "Mantis" - Kernel \r (\l).
+	#  Welcome to openSUSE 12.3 "Dartmouth" - Kernel \r (\l).
+	#  Welcome to openSUSE 13.1 "Bottle" - Kernel \r (\l).
+	#  Welcome to openSUSE 13.2 "Harlequin" - Kernel \r (\l).
+	#  Welcome to openSUSE Leap 42.1 - Kernel \r (\l).
+	#  Welcome to openSUSE 20151218 "Tumbleweed" - Kernel \r (\l).
+	#  Welcome to SUSE Linux Enterprise Server 11 SP1 for VMware  (x86_64) - Kernel \r (\l).
+	#  Ubuntu 10.04.4 LTS \n \l
+	#  Debian GNU/Linux wheezy/sid \n \l
+	#  Debian GNU/Linux 6.0 \n \l
+	#  CentOS release 6.4 (Final)
+	# /etc/redhat-release:
+	#  CentOS release 5.7 (Final)
+	#  CentOS release 6.4 (Final)
+	#  Red Hat Enterprise Linux ES release 4 (Nahant Update 2)
+	# /etc/debian_version:
+	#  6.0.4
+	#  wheezy/sid
+	#  squeeze/sid
 
-        my @key = sort keys %os;
-        s/\s*\\[rln].*// for @key;
+	my @key = sort keys %os;
+	s/\s*\\[rln].*// for @key;
 
-        my @vsn = grep m/^[0-9.]+$/ => @key;
-        #$self->{__X__} = { os => \%os, key => \@key, vsn => \@vsn };
+	my @vsn = grep m/^[0-9.]+$/ => @key;
+	#$self->{__X__} = { os => \%os, key => \@key, vsn => \@vsn };
 
-        if (my @welcome = grep s{^\s*Welcome\s+to\s+}{}i => @key) {
-            ($distro = $welcome[0]) =~ s/"([^"]+)"/($1)/;
+	if (my @welcome = grep s{^\s*Welcome\s+to\s+}{}i => @key) {
+	    ($distro = $welcome[0]) =~ s/"([^"]+)"/($1)/;
 	    }
-        elsif (my @rel  = grep m{\brelease\b}i => @key) {
-            @rel > 1 && $rel[0] =~ m/^Enterprise Linux Enterprise/
-                     && $rel[1] =~ m/^Oracle Linux/ and shift @rel;
-            $distro = $rel[0];
-            $distro =~ s/ *release//;
-            $distro =~ s/Red Hat Enterprise Linux/RHEL/; # Too long for subject
-            # RHEL ES 4 (Nahant Update 2) => RHEL Server 4.2 (Nahant)
-            $distro =~ s/^RHEL ES (\d+)\s+(.*)\s+Update\s+(\d+)/RHEL Server $1.$3 $2/;
+	elsif (my @rel  = grep m{\brelease\b}i => @key) {
+	    @rel > 1 && $rel[0] =~ m/^Enterprise Linux Enterprise/
+		     && $rel[1] =~ m/^Oracle Linux/ and shift @rel;
+	    $distro = $rel[0];
+	    $distro =~ s/ *release//;
+	    $distro =~ s/Red Hat Enterprise Linux/RHEL/; # Too long for subject
+	    # RHEL ES 4 (Nahant Update 2) => RHEL Server 4.2 (Nahant)
+	    $distro =~ s/^RHEL ES (\d+)\s+(.*)\s+Update\s+(\d+)/RHEL Server $1.$3 $2/;
 	    }
-        elsif ( my @lnx  = grep m{\bLinux\b}i => @key ) {
-            $distro = $lnx[0];
+	elsif ( my @lnx  = grep m{\bLinux\b}i => @key ) {
+	    $distro = $lnx[0];
 	    }
-        elsif ( $distro && @vsn ) {
-            $distro .= "-$vsn[0]";
+	elsif ( $distro && @vsn ) {
+	    $distro .= "-$vsn[0]";
 	    }
-        else {
-            $distro = $key[0];
+	else {
+	    $distro = $key[0];
 	    }
-        $distro =~ s/\s+-\s+Kernel.*//i;
+	$distro =~ s/\s+-\s+Kernel.*//i;
 	}
     if ($distro =~ s/^\s*(.*\S)\s*$/$1/) {
-        $self->{__distro} = $distro;
-        $os .= " [$distro]";
+	$self->{__distro} = $distro;
+	$os .= " [$distro]";
 	}
     $self->{__os} = $os;
     } # prepare_os
@@ -241,7 +241,7 @@ sub linux_generic {
 
     my $ncores = 0;
     for my $cores (grep m/cpu cores\s*:\s*\d+/ => $self->_proc_cpuinfo) {
-        $ncores += $cores =~ m/(\d+)/ ? $1 : 0;
+	$ncores += $cores =~ m/(\d+)/ ? $1 : 0;
 	}
     $ncores and $self->{__cpu_count} .= " [$ncores cores]";
     } # _linux_generic
@@ -303,8 +303,8 @@ sub linux_ppc {
     my @parts = qw( cpu machine clock );
     my %info = map { ($_ => $self->from_cpuinfo ($_)) } @parts;
     if ($info{detected} = $self->from_cpuinfo ("detected as")){
-        $info{detected} =~ s/.*(\b.+Mac G\d).*/$1/;
-        $info{machine} = $info{detected};
+	$info{detected} =~ s/.*(\b.+Mac G\d).*/$1/;
+	$info{machine} = $info{detected};
 	}
 
     $self->{__cpu} = sprintf "%s %s (%s)", map { $info{$_} } @parts;
@@ -335,7 +335,7 @@ sub linux_sparc {
     my %info  = map { ($_ => $self->from_cpuinfo ($_)) } @parts;
     my $cpu   = $info{cpu};
     $info{Cpu0ClkTck} and
-        $cpu .=  sprintf " (%.0fMHz)", hex ($info{Cpu0ClkTck}) / 1_000_000;
+	$cpu .=  sprintf " (%.0fMHz)", hex ($info{Cpu0ClkTck}) / 1_000_000;
     $self->{__cpu} = $cpu;
     } # linux_sparc
 
@@ -349,9 +349,9 @@ sub prepare_proc_cpuinfo {
     my $self = shift;
 
     if (open my $pci, "<", "/proc/cpuinfo") {
-        chomp ($self->{__proc_cpuinfo} = [<$pci>]);
-        close $pci;
-        return 1;
+	chomp ($self->{__proc_cpuinfo} = [<$pci>]);
+	close $pci;
+	return 1;
 	}
     } # prepare_proc_cpuinfo
 

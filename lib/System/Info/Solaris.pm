@@ -29,30 +29,30 @@ sub prepare_sysinfo {
     my @psrinfo = `psrinfo -v`;
     my ($psrinfo) = grep m/the .* operates .* [gm]hz/ix => @psrinfo;
     my ($type, $speed, $magnitude) =
-        $psrinfo =~ m/the (.+) processor.*at (.+?)\s*([GM]hz)/i;
+	$psrinfo =~ m/the (.+) processor.*at (.+?)\s*([GM]hz)/i;
     $type =~ s/(v9)$/ $1 ? "64" : ""/e;
 
     my $cpu = $self->_cpu;
 
     if (-d "/usr/platform") { # Solaris but not OSF/1.
-        chomp (my $platform = `uname -i`);
-        my $pfpath = "/usr/platform/$platform/sbin/prtdiag";
-        if (-x "$pfpath") { # Not on Solaris-x86
-            my $prtdiag = `$pfpath`;
-            ($cpu) = $prtdiag =~ m/^System .+\(([^\s\)]+)/;
-            unless ($cpu) {
-                my ($cpu_line) = grep m/\s+on-?line\s+/i => split /\n/ => $prtdiag;
-                ($cpu = (split " " => $cpu_line)[4]) =~ s/.*,//;
+	chomp (my $platform = `uname -i`);
+	my $pfpath = "/usr/platform/$platform/sbin/prtdiag";
+	if (-x "$pfpath") { # Not on Solaris-x86
+	    my $prtdiag = `$pfpath`;
+	    ($cpu) = $prtdiag =~ m/^System .+\(([^\s\)]+)/;
+	    unless ($cpu) {
+		my ($cpu_line) = grep m/\s+on-?line\s+/i => split /\n/ => $prtdiag;
+		($cpu = (split " " => $cpu_line)[4]) =~ s/.*,//;
 		}
-            $cpu .= " ($speed$magnitude)";
+	    $cpu .= " ($speed$magnitude)";
 	    }
-        else {
-            $cpu .= " ($speed$magnitude)";
+	else {
+	    $cpu .= " ($speed$magnitude)";
 	    }
 	}
     elsif (-x "/usr/sbin/sizer") { # OSF/1.
-        $cpu = $type;
-        chomp ($type = `sizer -implver`);
+	$cpu = $type;
+	chomp ($type = `sizer -implver`);
 	}
 
     my $ncpu = grep m/on-?line/ => `psrinfo`;
@@ -74,8 +74,8 @@ sub prepare_os {
 
     my ($osn, $osv) = ($self->_osname, $self->_osvers);
     if ($^O =~ /solaris|sunos/i && $osv > 5) {
-        $osn = "Solaris";
-        $osv = "2." . (split m/\./ => $osv, 2)[1];
+	$osn = "Solaris";
+	$osv = "2." . (split m/\./ => $osv, 2)[1];
 	}
     $self->{__os} = join " - ", $osn, $osv;
     } # prepare_os

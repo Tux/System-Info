@@ -33,9 +33,9 @@ ok defined &si_uname, "si_uname imported";
     $counter += ok ($si->cpu_type, "cpu_type: " . $si->cpu_type);
     $counter += ok ($si->cpu,      "cpu: "      . $si->cpu);
     SKIP: {
-        $si->ncpu or skip "No #cpu code for this platform", 1;
-        $counter += ok ($si->ncpu,  "number of cpus: " . $si->ncpu);
-        $expect++;
+	$si->ncpu or skip "No #cpu code for this platform", 1;
+	$counter += ok ($si->ncpu,  "number of cpus: " . $si->ncpu);
+	$expect++;
 	}
     $counter += ok ($si->os,   $si->os);
     $counter += ok ($si->host, $si->host);

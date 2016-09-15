@@ -28,10 +28,10 @@ sub prepare_sysinfo {
     my $cpu = $sysctl->{model};
 
     if (exists $sysctl->{cpuspeed}) {
-        $cpu .= sprintf " (%.0f MHz)", $sysctl->{cpuspeed};
+	$cpu .= sprintf " (%.0f MHz)", $sysctl->{cpuspeed};
 	}
     elsif (exists $sysctl->{cpufrequency}) {
-        $cpu .= sprintf " (%.0f MHz)", $sysctl->{cpufrequency}/1_000_000;
+	$cpu .= sprintf " (%.0f MHz)", $sysctl->{cpufrequency}/1_000_000;
 	}
 
     $self->{__cpu_type}  = $sysctl->{machine} if $sysctl->{machine};
@@ -48,12 +48,12 @@ sub __get_sysctl {
 
     my %extra  = (cpufrequency => undef, cpuspeed => undef);
     my @e_args = map {
-        m/^hw\.(\w+)\s*[:=]/; $1
+	m/^hw\.(\w+)\s*[:=]/; $1
 	} grep m/^hw\.(\w+)/ && exists $extra{$1} => `$sysctl_cmd -a hw`;
 
     foreach my $name (qw( model machine ncpu ), @e_args) {
-        chomp ($sysctl{$name} = `$sysctl_cmd hw.$name`);
-        $sysctl{$name} =~ s/^hw\.$name\s*[:=]\s*//;
+	chomp ($sysctl{$name} = `$sysctl_cmd hw.$name`);
+	$sysctl{$name} =~ s/^hw\.$name\s*[:=]\s*//;
 	}
     $sysctl{machine} and $sysctl{machine} =~ s/Power Macintosh/macppc/;
 
