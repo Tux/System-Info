@@ -5,7 +5,7 @@ use warnings;
 
 use base "System::Info::Base";
 
-our $VERSION = "0.050";
+our $VERSION = "0.051";
 
 =head1 NAME
 

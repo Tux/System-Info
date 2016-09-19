@@ -47,7 +47,7 @@ distribution_type:       module
 provides:
     System::Info:
         file:            lib/System/Info.pm
-        version:         0.052
+        version:         VERSION
     System::Info::Base:
         file:            lib/System/Info/Base.pm
         version:         0.050
@@ -77,7 +77,7 @@ provides:
         version:         0.050
     System::Info::Linux:
         file:            lib/System/Info/Linux.pm
-        version:         0.050
+        version:         0.051
     System::Info::Solaris:
         file:            lib/System/Info/Solaris.pm
         version:         0.050
@@ -98,7 +98,7 @@ test_requires:
     Test::More:          0.88
     Test::NoWarnings:    0
 test_recommends:
-    Test::More:          1.302040
+    Test::More:          1.302056
 resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/Tux/System-Info
