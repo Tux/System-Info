@@ -120,7 +120,7 @@ __END__
 
 =head1 COPYRIGHT AND LICENSE
 
-(c) 2016-2016, Abe Timmerman & H.Merijn Brand, All rights reserved.
+(c) 2016-2017, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
 With contributions from Jarkko Hietaniemi, Merijn Brand, Campo
 Weijerman, Alan Burlison, Allen Smith, Alain Barbet, Dominic Dunlop,
