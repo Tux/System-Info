@@ -1,6 +1,7 @@
-0.054	- 2017-03-05,  H.Merijn Brand
+0.054	- 2017-03-14,  H.Merijn Brand
     * It's 2017
     * Add DSM-6.1
+    * Add OpenSUSE 42.2
 
 0.053	- 2016-09-19,  H.Merijn Brand
     * Add tests for NixOS 16.09
