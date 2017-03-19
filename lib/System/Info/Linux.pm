@@ -233,17 +233,44 @@ Check C</proc/cpuinfo> for these keys:
 sub linux_generic {
     my $self = shift;
 
-    $self->{__cpu_count} = $self->count_in_cpuinfo (qr/^processor\s+:\s+/);
+    my $n_phys_id   = $self->count_unique_in_cpuinfo (qr/^physical id\s+:/) || 0;
+    my $n_core_id   = $self->count_unique_in_cpuinfo (qr/^core id\s+:/)     || 0;
+    my $n_processor = $self->count_unique_in_cpuinfo (qr/^processor\s+:/)   || 0;
+    my $n_cpu       = $n_phys_id || $n_core_id || $n_processor;
+
+    # ::diag"Np: $n_phys_id, NC: $n_core_id, NP: $n_processor, NC: $n_cpu";
+    $self->{__cpu_count} = $n_cpu;
 
     my @parts = ("model name", "vendor_id", "cpu mhz");
     my %info = map { ($_ => $self->from_cpuinfo ($_)) } @parts;
     $self->{__cpu} = sprintf "%s (%s %.0fMHz)", map { $info{$_} } @parts;
 
-    my $ncores = 0;
-    for my $cores (grep m/cpu cores\s*:\s*\d+/ => $self->_proc_cpuinfo) {
-	$ncores += $cores =~ m/(\d+)/ ? $1 : 0;
+    if ($n_phys_id) {
+	$n_processor > $n_phys_id and
+	    $self->{__cpu_count} .= " [$n_processor cores]";
+	return;
 	}
-    $ncores and $self->{__cpu_count} .= " [$ncores cores]";
+    if ($n_core_id) {
+	$n_processor > $n_core_id and
+	    $self->{__cpu_count} .= " [$n_processor cores]";
+	return;
+	}
+
+    my $n_cores = 0;
+    my $core_id = 0;
+    my %cores;
+    for my $cores (grep m/(cpu cores|core id)\s*:\s*\d+/ => $self->_proc_cpuinfo) {
+	my ($tag, $count) = $cores =~ m/^(.*\S)\s*:\s*(\d+)/ or next;
+	if ($tag eq "core id") {
+	    $core_id = $count;
+	    }
+	else {
+	    $cores{$core_id} = $count;
+	    }
+	}
+    $n_cores += $cores{$_} for keys %cores;
+
+    $n_cores > $n_cpu and $self->{__cpu_count} .= " [$n_cores cores]";
     } # _linux_generic
 
 =head2 $si->linux_arm
@@ -355,7 +382,7 @@ sub prepare_proc_cpuinfo {
 	}
     } # prepare_proc_cpuinfo
 
-=head2 $si->count_in_cpuinfo($regex)
+=head2 $si->count_in_cpuinfo ($regex)
 
 Returns the number of lines $regex matches for.
 
@@ -367,6 +394,20 @@ sub count_in_cpuinfo {
 
     return scalar grep /$regex/, $self->_proc_cpuinfo;
     } # count_in_cpuinfo
+
+=head2 $si->count_unique_in_cpuinfo ($regex)
+
+Returns the number of lines $regex matches for.
+
+=cut
+
+sub count_unique_in_cpuinfo {
+    my $self = shift;
+    my ($regex) = @_;
+
+    my %match = map { $_ => 1 } grep /$regex/ => $self->_proc_cpuinfo;
+    return scalar keys %match;
+    } # count_unique_in_cpuinfo
 
 =head2 $si->from_cpuinfo ($key)
 
