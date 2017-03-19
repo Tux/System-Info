@@ -4,6 +4,7 @@
     * Add OpenSUSE 42.2
     * Improve /pro/cpuinfo parsing (RT#120559)
     * Add CentOS 7.3
+    * Add Oracle Server 7.2
 
 0.053	- 2016-09-19,  H.Merijn Brand
     * Add tests for NixOS 16.09
