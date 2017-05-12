@@ -48,7 +48,7 @@ or
 
 =head1 DESCRIPTION
 
-This module tries to present system-related information, like number of CPU's,
+System::Info tries to present system-related information, like number of CPU's,
 architecture, OS and release related information in a system-independent way.
 This releases the user of this module of the need to know if the information
 comes from Windows, Linux, HP-UX, AIX, Solaris, Irix, or VMS, and if the
