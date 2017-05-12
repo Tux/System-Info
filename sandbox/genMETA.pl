@@ -77,7 +77,7 @@ provides:
         version:         0.050
     System::Info::Linux:
         file:            lib/System/Info/Linux.pm
-        version:         0.051
+        version:         0.052
     System::Info::Solaris:
         file:            lib/System/Info/Solaris.pm
         version:         0.050
