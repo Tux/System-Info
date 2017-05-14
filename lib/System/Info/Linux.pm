@@ -26,9 +26,10 @@ sub prepare_sysinfo {
     $self->prepare_proc_cpuinfo or return;
 
     for ($self->get_cpu_type) {
-	m/arm/   && do {$self->linux_arm;   last};
-	m/ppc/   && do {$self->linux_ppc;   last};
-	m/sparc/ && do {$self->linux_sparc; last};
+	m/arm/     and do { $self->linux_arm;   last };
+	m/aarch64/ and do { $self->linux_arm;   last };
+	m/ppc/     and do { $self->linux_ppc;   last };
+	m/sparc/   and do { $self->linux_sparc; last };
 	# default
 	$self->linux_generic;
 	}
