@@ -2,6 +2,7 @@
     * Use Darwin infor internally lowercase (RT#97441 from Test::Smoke)
     * Add arm for aarch64 (RT#119691)
     * Add info for Ubuntu-16.04
+    * Use lsb_release (command) as fallback
 
 0.055	- 2017-05-12,  H.Merijn Brand
     * Make a longer description

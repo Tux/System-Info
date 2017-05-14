@@ -144,6 +144,23 @@ sub prepare_os {
 	$distro .= qq{ NetBSD $dv};
 	}
     else {
+	unless ($os{DISTRIB_ID} || $os{DISTRIB_RELEASE} || $os{DISTRIB_CODENAME}) {
+	    if (open my $ch, "lsb_release -a 2>&1 |") {
+		my %map = (
+		    "LSB Version"	=> "don't care",
+		    "Distributor ID"	=> "DISTRIB_ID",
+		    "Description"	=> "DISTRIB_DESCRIPTION",
+		    "Release"		=> "DISTRIB_RELEASE",
+		    "Code"		=> "DISTRIB_CODENAME",
+		    );
+		while (<$ch>) {
+		    chomp;
+		    m/^\s*(\S.*?)\s*:\s*(.*?)\s*$/ or next;
+		    $os{$map{$1} || $1} ||= $2 unless $2 eq "n/a";
+		    }
+		}
+	    }
+
 	# /etc/issue:
 	#  Welcome to SUSE LINUX 10.0 (i586) - Kernel \r (\l).
 	#  Welcome to openSUSE 10.2 (i586) - Kernel \r (\l).
