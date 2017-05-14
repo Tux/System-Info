@@ -337,6 +337,11 @@ t/etc/ubuntu-15.04/DISTNAME
 t/etc/ubuntu-15.04/issue
 t/etc/ubuntu-15.04/lsb-release
 t/etc/ubuntu-15.04/os-release
+t/etc/ubuntu-16.04/debian_version
+t/etc/ubuntu-16.04/DISTNAME
+t/etc/ubuntu-16.04/issue
+t/etc/ubuntu-16.04/lsb-release
+t/etc/ubuntu-16.04/os-release
 t/sysinfo.t
 t/sysinfo_macos.t
 t/sysinfo_proc.t
