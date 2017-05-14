@@ -1,3 +1,6 @@
+0.056	- 2017-05-14,  H.Merijn Brand
+    * Use Darwin infor internally lowercase (RT#97441 from Test::Smoke)
+
 0.055	- 2017-05-12,  H.Merijn Brand
     * Make a longer description
     * Chomp entries in internal info (Linux)
