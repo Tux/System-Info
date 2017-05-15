@@ -154,6 +154,13 @@ t/etc/fedora-23/os-release
 t/etc/fedora-23/redhat-release
 t/etc/fedora-23/system-release
 t/etc/fedora-23/system-release-cpe
+t/etc/fedora-27/DISTNAME
+t/etc/fedora-27/fedora-release
+t/etc/fedora-27/issue
+t/etc/fedora-27/os-release
+t/etc/fedora-27/redhat-release
+t/etc/fedora-27/system-release
+t/etc/fedora-27/system-release-cpe
 t/etc/get-lsb.pl
 t/etc/get-lsb.sh
 t/etc/mageia-4/DISTNAME
