@@ -63,6 +63,30 @@ sub _file_info {
     close $fh;
     } # _file_info
 
+sub _lsb_release {
+    my $os = shift;
+
+    $ENV{SMOKE_USE_ETC} and return;
+
+    $os->{DISTRIB_ID} || $os->{DISTRIB_RELEASE} || $os->{DISTRIB_CODENAME}
+	or return;
+
+    #use DP;die DDumper $os;
+    open my $ch, "lsb_release -a 2>&1 |" or return;
+    my %map = (
+	"LSB Version"		=> "don't care",
+	"Distributor ID"	=> "DISTRIB_ID",
+	"Description"		=> "DISTRIB_DESCRIPTION",
+	"Release"		=> "DISTRIB_RELEASE",
+	"Code"			=> "DISTRIB_CODENAME",
+	);
+    while (<$ch>) {
+	chomp;
+	m/^\s*(\S.*?)\s*:\s*(.*?)\s*$/ or next;
+	$os->{$map{$1} || $1} ||= $2 unless $2 eq "n/a";
+	}
+    } # _lsb_release
+
 sub prepare_os {
     my $self = shift;
 
@@ -70,8 +94,7 @@ sub prepare_os {
     my @dist_file = grep { -f $_ && -s _ } map {
 	-d $_ ? glob ("$_/*") : ($_)
 	} glob ("$etc/*[-_][rRvV][eE][lLrR]*"), "$etc/issue",
-		"$etc.defaults/VERSION", "$etc/VERSION", "$etc/release"
-	or return;
+		"$etc.defaults/VERSION", "$etc/VERSION", "$etc/release";
 
     my $os = $self->_os;
     my %os;
@@ -84,6 +107,10 @@ sub prepare_os {
 	    }
 	_file_info ($df, \%os);
 	}
+    _lsb_release (\%os);
+
+    keys %os or return;
+
     foreach my $key (keys %os) {
 	my $KEY = uc $key;
 	defined $os{$key} or next;
@@ -144,23 +171,6 @@ sub prepare_os {
 	$distro .= qq{ NetBSD $dv};
 	}
     else {
-	unless ($os{DISTRIB_ID} || $os{DISTRIB_RELEASE} || $os{DISTRIB_CODENAME}) {
-	    if (open my $ch, "lsb_release -a 2>&1 |") {
-		my %map = (
-		    "LSB Version"	=> "don't care",
-		    "Distributor ID"	=> "DISTRIB_ID",
-		    "Description"	=> "DISTRIB_DESCRIPTION",
-		    "Release"		=> "DISTRIB_RELEASE",
-		    "Code"		=> "DISTRIB_CODENAME",
-		    );
-		while (<$ch>) {
-		    chomp;
-		    m/^\s*(\S.*?)\s*:\s*(.*?)\s*$/ or next;
-		    $os{$map{$1} || $1} ||= $2 unless $2 eq "n/a";
-		    }
-		}
-	    }
-
 	# /etc/issue:
 	#  Welcome to SUSE LINUX 10.0 (i586) - Kernel \r (\l).
 	#  Welcome to openSUSE 10.2 (i586) - Kernel \r (\l).
