@@ -22,7 +22,6 @@ examples/sysinfo.pl
 t/distname.t
 t/etc/centos-5.10/DISTNAME
 t/etc/centos-5.10/issue
-t/etc/centos-5.10/lsb-release.d
 t/etc/centos-5.10/redhat-release
 t/etc/centos-6.4/centos-release
 t/etc/centos-6.4/DISTNAME
