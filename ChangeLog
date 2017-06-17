@@ -1,4 +1,4 @@
-0.056	- 2017-05-15,  H.Merijn Brand
+0.056	- 2017-06-17,  H.Merijn Brand
     * Use Darwin infor internally lowercase (RT#97441 from Test::Smoke)
     * Add arm for aarch64 (RT#119691)
     * Add info for Ubuntu-16.04
