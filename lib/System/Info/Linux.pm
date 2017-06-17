@@ -55,9 +55,11 @@ sub _file_info {
 	    # Having a value prevails over being defined
 	    defined $os->{$k} and next;
 	    $v =~ s/^"\s*(.*?)\s*"$/$1/;
+	    $v =~ m{^["(]?undef(?:ined)?[")]$}i and $v = "undefined";
 	    $os->{$k} = $v;
 	    next;
 	    }
+	m/^[12][0-9]{3}(?:,\s*[12][0-9]{3})*$/ and next; # Copyright years
 	exists $os->{$_} or $os->{$_} = undef;
 	}
     close $fh;
