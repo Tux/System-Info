@@ -203,6 +203,17 @@ my $this_system = System::Info::Generic->new;
 	_cpu      => "IBM/S390 (1300 MHz)",
 	_ncpu     => "3",
 	}, "Read /proc/cpuinfo for s390x SLES 11-SP2";
+
+    $CPU_TYPE = "s390x_fedora";
+    my $s390xfedora = System::Info::Linux->new;
+
+    is_deeply $s390xfedora->old_dump, {
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => $CPU_TYPE,
+	_cpu      => "IBM/S390 (2900 MHz)",
+	_ncpu     => "2",
+	}, "Read /proc/cpuinfo for s390x Fedora";
     }
 
 done_testing;
@@ -1296,6 +1307,28 @@ features        : esan3 zarch stfle msa ldisp eimm dfp edat etf3eh highgprs
 processor 0: version = 00,  identification = 002623,  machine = 2064
 processor 1: version = 00,  identification = 102623,  machine = 2064
 processor 2: version = 00,  identification = 202623,  machine = 2064
+__EOINFO__
+
+    $files{"s390x_fedora"} = <<'__EOINFO__';
+vendor_id       : IBM/S390
+# processors    : 2
+bogomips per cpu: 2913.00
+max thread id   : 0
+features        : esan3 zarch stfle msa ldisp eimm dfp edat etf3eh highgprs te sie 
+cache0          : level=1 type=Data scope=Private size=96K line_size=256 associativity=6
+cache1          : level=1 type=Instruction scope=Private size=64K line_size=256 associativity=4
+cache2          : level=2 type=Data scope=Private size=1024K line_size=256 associativity=8
+cache3          : level=2 type=Instruction scope=Private size=1024K line_size=256 associativity=8
+cache4          : level=3 type=Unified scope=Shared size=49152K line_size=256 associativity=12
+cache5          : level=4 type=Unified scope=Shared size=393216K line_size=256 associativity=24
+processor 0: version = FF,  identification = 35C047,  machine = 2827
+processor 1: version = FF,  identification = 35C047,  machine = 2827
+cpu number      : 0
+cpu MHz dynamic : 5504
+cpu MHz static  : 5504
+cpu number      : 1
+cpu MHz dynamic : 5504
+cpu MHz static  : 5504
 __EOINFO__
     }
 
