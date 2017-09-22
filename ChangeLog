@@ -5,6 +5,7 @@
     * Use lsb_release (command) as fallback
     * Add fedora-27
     * Add tests for Raspbian-9
+    * Fix cpu test for armv6 with new cpuinfo format
 
 0.055	- 2017-05-12,  H.Merijn Brand
     * Make a longer description

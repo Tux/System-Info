@@ -324,7 +324,8 @@ sub linux_arm {
 
     $self->{__cpu_count} = $self->count_in_cpuinfo (qr/^processor\s+:\s+/i);
 
-    my $cpu  = $self->from_cpuinfo ("Processor");
+    my $cpu  = $self->from_cpuinfo ("Processor") ||
+	       $self->from_cpuinfo ("Model[_ ]name");
     my $bogo = $self->from_cpuinfo ("BogoMIPS");
     my $mhz  = 100 * int (($bogo + 50) / 100);
     $cpu =~ s/\s+/ /g;
@@ -407,6 +408,8 @@ sub prepare_proc_cpuinfo {
 
     if (open my $pci, "<", "/proc/cpuinfo") {
 	chomp (my @pci = <$pci>);
+	s/[\s\xa0]+/ /g for @pci;
+	s/ $//          for @pci;
 	$self->{__proc_cpuinfo} = \@pci;
 	close $pci;
 	return 1;
@@ -420,8 +423,7 @@ Returns the number of lines $regex matches for.
 =cut
 
 sub count_in_cpuinfo {
-    my $self = shift;
-    my ($regex) = @_;
+    my ($self, $regex) = @_;
 
     return scalar grep /$regex/, $self->_proc_cpuinfo;
     } # count_in_cpuinfo
@@ -433,8 +435,7 @@ Returns the number of lines $regex matches for.
 =cut
 
 sub count_unique_in_cpuinfo {
-    my $self = shift;
-    my ($regex) = @_;
+    my ($self, $regex) = @_;
 
     my %match = map { $_ => 1 } grep /$regex/ => $self->_proc_cpuinfo;
     return scalar keys %match;
@@ -447,14 +448,11 @@ Returns the first value of that key in C<< /proc/cpuinfo >>.
 =cut
 
 sub from_cpuinfo {
-    my $self = shift;
-    my ($key) = @_;
+    my ($self, $key) = @_;
 
     my ($first) = grep m/^\s*$key\s*[:=]\s*/i => $self->_proc_cpuinfo;
     defined $first or $first = "";
     $first =~ s/^\s*$key\s*[:=]\s*//i;
-    $first =~ s/\s+/ /g;
-    $first =~ s/\s+$//;
     return $first;
     } # from_cpuinfo
 

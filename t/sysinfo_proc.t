@@ -107,7 +107,7 @@ my $this_system = System::Info::Generic->new;
     is_deeply $ppc->old_dump, {
 	_host     => $this_system->host,
 	_os       => $this_system->os,
-	_cpu_type => "ppc",
+	_cpu_type => $CPU_TYPE,
 	_cpu      => "7400, altivec supported PowerMac G4 (400.000000MHz)",
 	_ncpu     => 1,
 	}, "Read /proc/cpuinfo for ppc";
@@ -119,19 +119,31 @@ my $this_system = System::Info::Generic->new;
     is_deeply $i386_2->old_dump, {
 	_host     => $this_system->host,
 	_os       => $this_system->os,
-	_cpu_type => "i386_2",
+	_cpu_type => $CPU_TYPE,
 	_cpu      => "Intel(R) Core(TM)2 CPU T5600 @ 1.83GHz (GenuineIntel 1000MHz)",
 	_ncpu     => "1 [2 cores]",
 	}, "Read /proc/cpuinfo for duo i386";
 
-    $CPU_TYPE = "arm_v6";
+    $CPU_TYPE = "arm_v6l";
 
     my $arm_v6 = System::Info::Linux->new;
 
     is_deeply $arm_v6->old_dump, {
 	_host     => $this_system->host,
 	_os       => $this_system->os,
-	_cpu_type => "arm_v6",
+	_cpu_type => $CPU_TYPE,
+	_cpu      => "ARMv6-compatible processor rev 7 (v6l) (700 MHz)",
+	_ncpu     => 1,
+	}, "Read /proc/cpuinfo for ARM v6";
+
+    $CPU_TYPE = "arm_v6l2";
+
+    my $arm_v62 = System::Info::Linux->new;
+
+    is_deeply $arm_v62->old_dump, {
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => $CPU_TYPE,
 	_cpu      => "ARMv6-compatible processor rev 7 (v6l) (700 MHz)",
 	_ncpu     => 1,
 	}, "Read /proc/cpuinfo for ARM v6";
@@ -143,10 +155,10 @@ my $this_system = System::Info::Generic->new;
     is_deeply $arm_v7->old_dump, {
 	_host     => $this_system->host,
 	_os       => $this_system->os,
-	_cpu_type => "arm_v7",
+	_cpu_type => $CPU_TYPE,
 	_cpu      => "ARMv7 Processor rev 2 (v7l) (300 MHz)",
 	_ncpu     => 1,
-	}, "Read /proc/cpuinfo for ARM v6";
+	}, "Read /proc/cpuinfo for ARM v7";
 
     $CPU_TYPE = "i386_16";
     my $i386_16 = System::Info::Linux->new;
@@ -273,18 +285,34 @@ bogomips	: 3657.62
 clflush size	: 64
 __EOINFO__
 
-    $files{arm_v6} = <<'__EOINFO__'; # RaspberryPI, raspbian
-Processor      : ARMv6-compatible processor rev 7 (v6l)
-BogoMIPS       : 697.95
-Features       : swp half thumb fastmult vfp edsp java tls 
-CPU implementer        : 0x41
+    $files{arm_v6l} = <<'__EOINFO__'; # RaspberryPI, raspbian 8.0
+Processor       : ARMv6-compatible processor rev 7 (v6l)
+BogoMIPS        : 697.95
+Features        : swp half thumb fastmult vfp edsp java tls 
+CPU implementer : 0x41
 CPU architecture: 7
-CPU variant    : 0x0
-CPU part       : 0xb76
-CPU revision   : 7
-Hardware       : BCM2708
-Revision       : 000e
-Serial         : 00000000dc08448c
+CPU variant     : 0x0
+CPU part        : 0xb76
+CPU revision    : 7
+Hardware        : BCM2708
+Revision        : 000e
+Serial          : 00000000dc08448c
+__EOINFO__
+
+    $files{arm_v6l2} = <<'__EOINFO__'; # RaspberryPI, raspbian 9.1
+processor       : 0
+model name      : ARMv6-compatible processor rev 7 (v6l)
+BogoMIPS        : 697.95
+Features        : half thumb fastmult vfp edsp java tls
+CPU implementer : 0x41
+CPU architecture: 7
+CPU variant     : 0x0
+CPU part        : 0xb76
+CPU revision    : 7
+
+Hardware        : BCM2835
+Revision        : 000f
+Serial          : 00000000c7982c01
 __EOINFO__
 
     $files{arm_v7} = <<'__EOINFO__'; # Archos 101IT, Android 2.2
@@ -1261,6 +1289,8 @@ sub TIEHANDLE {
 sub READLINE {
     my $buffer = shift;
     length $$buffer or return;
+    $$buffer =~ s/[ \t\r\xa0]+/ /g;
+    $$buffer =~ s/ \n/\n/g;
     if (wantarray) {
 	my @list = map "$_\n" => split m/\n/, $$buffer;
 	$$buffer = "";
