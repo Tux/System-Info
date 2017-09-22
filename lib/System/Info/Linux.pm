@@ -30,6 +30,7 @@ sub prepare_sysinfo {
 	m/aarch64/ and do { $self->linux_arm;   last };
 	m/ppc/     and do { $self->linux_ppc;   last };
 	m/sparc/   and do { $self->linux_sparc; last };
+	m/s390x/   and do { $self->linux_s390x; last };
 	# default
 	$self->linux_generic;
 	}
@@ -396,6 +397,37 @@ sub linux_sparc {
 	$cpu .=  sprintf " (%.0fMHz)", hex ($info{Cpu0ClkTck}) / 1_000_000;
     $self->{__cpu} = $cpu;
     } # linux_sparc
+
+=head2 $si->linux_s390x
+
+Check C</proc/cpuinfo> for these keys:
+
+=over
+
+=item "processor"  (count occurrence for __cpu_count)
+
+=item "Processor" (part of __cpu)
+
+=item "BogoMIPS"  (part of __cpu)
+
+=back
+
+=cut
+
+sub linux_s390x {
+    my $self = shift;
+
+    $self->{__cpu_count} = $self->count_in_cpuinfo (qr/^processor\s+\d+:\s+/i);
+
+    my $cpu  = $self->from_cpuinfo ("vendor_id") ||
+	       $self->from_cpuinfo ("Processor") ||
+	       $self->from_cpuinfo ("Model[_ ]name");
+    my $bogo = $self->from_cpuinfo (qr{BogoMIPS(?:\s*per[ _]CPU)?}i);
+    my $mhz  = 100 * int (($bogo + 50) / 100);
+    $cpu =~ s/\s+/ /g;
+    $mhz and $cpu .= " ($mhz MHz)";
+    $self->{__cpu} = $cpu;
+    } # _linux_s390x
 
 =head2 $si->prepare_proc_cpuinfo
 

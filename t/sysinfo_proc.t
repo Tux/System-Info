@@ -192,6 +192,17 @@ my $this_system = System::Info::Generic->new;
 	_cpu      => "Quad-Core AMD Opteron(tm) Processor 8356 (AuthenticAMD 1200MHz)",
 	_ncpu     => "4 [16 cores]",
 	}, "Read /proc/cpuinfo for vogon";
+
+    $CPU_TYPE = "s390x_sles11_sp2";
+    my $s390xsles11sp2 = System::Info::Linux->new;
+
+    is_deeply $s390xsles11sp2->old_dump, {
+	_host     => $this_system->host,
+	_os       => $this_system->os,
+	_cpu_type => $CPU_TYPE,
+	_cpu      => "IBM/S390 (1300 MHz)",
+	_ncpu     => "3",
+	}, "Read /proc/cpuinfo for s390x SLES 11-SP2";
     }
 
 done_testing;
@@ -1275,6 +1286,16 @@ cache_alignment	: 64
 address sizes	: 48 bits physical, 48 bits virtual
 power management: ts ttp tm stc 100mhzsteps hwpstate
 
+__EOINFO__
+
+    $files{"s390x_sles11_sp2"} = <<'__EOINFO__';
+vendor_id       : IBM/S390
+# processors    : 3
+bogomips per cpu: 1258.00
+features        : esan3 zarch stfle msa ldisp eimm dfp edat etf3eh highgprs
+processor 0: version = 00,  identification = 002623,  machine = 2064
+processor 1: version = 00,  identification = 102623,  machine = 2064
+processor 2: version = 00,  identification = 202623,  machine = 2064
 __EOINFO__
     }
 
