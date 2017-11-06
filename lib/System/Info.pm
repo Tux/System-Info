@@ -6,7 +6,7 @@ use warnings;
 our $VERSION = "0.057";
 
 use base "Exporter";
-our @EXPORT_OK = qw( &sysinfo &si_uname );
+our @EXPORT_OK = qw( &sysinfo &sysinfo_hash &si_uname );
 
 use System::Info::AIX;
 use System::Info::BSD;
@@ -92,6 +92,36 @@ sub sysinfo {
 	? qw( host os cpu ncpu cpu_type )
 	: qw( host os cpu_type );
     return join " ", @{ $si }{ map "_$_" => @fields };
+    } # sysinfo
+
+=head2 sysinfo_hash
+
+C<sysinfo_hash> returns a hash reference with basic system information, like:
+
+  { cpu       => 'Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz (GenuineIntel 2700MHz)',
+    cpu_count => '1 [8 cores]',
+    cpu_type  => 'x86_64',
+    distro    => 'openSUSE Tumbleweed 20171030',
+    hostname  => 'foobar',
+    os        => 'linux - 4.13.10-1-default [openSUSE Tumbleweed 20171030]',
+    osname    => 'Linux',
+    osvers    => '4.13.10-1-default'
+    }
+
+=cut
+
+sub sysinfo_hash {
+    my $si = System::Info->new;
+    return {
+	hostname  => $si->{_host},
+	cpu       => $si->{_cpu},
+	cpu_count => $si->{_ncpu},
+	cpu_type  => $si->{_cpu_type},
+	os        => $si->{_os},
+	osname    => $si->{__osname},
+	osvers    => $si->{__osvers},
+	distro    => $si->{__distro},
+	};
     } # sysinfo
 
 =head2 si_uname (@args)

@@ -1,6 +1,7 @@
 0.057	- 2017-11-06,  H.Merijn Brand
     * Add VERSION_ID to distroname if set
     * Add DragonFly (PR#2 - xenu)
+    * Add sysinfo_hash
 
 0.056	- 2017-09-22,  H.Merijn Brand
     * Use Darwin info internally lowercase (RT#97441 from Test::Smoke)
