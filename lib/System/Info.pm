@@ -66,7 +66,7 @@ sub new {
     my $factory = shift;
 
     $^O =~ m/aix/i               and return System::Info::AIX->new;
-    $^O =~ m/bsd/i               and return System::Info::BSD->new;
+    $^O =~ m/bsd|dragonfly/i     and return System::Info::BSD->new;
     $^O =~ m/cygwin/i            and return System::Info::Cygwin->new;
     $^O =~ m/darwin/i            and return System::Info::Darwin->new;
     $^O =~ m/haiku/              and return System::Info::Haiku->new;
