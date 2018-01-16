@@ -43,6 +43,10 @@ sub new {
     $self->{_cpu}      = $self->get_cpu;
     $self->{_ncpu}     = $self->get_cpu_count;
 
+    $self->{_ncore}    = $self->{_ncpu}
+	? (sort { $b <=> $a } ($self->{_ncpu} =~ m/(\d+)/g))[0]
+	: $self->{_ncpu};
+
     return $self;
     } # new
 
@@ -145,6 +149,19 @@ sub get_cpu_count {
     my $self = shift;
     return $self->_cpu_count;
     } # get_cpu_count
+
+=head2 $si->get_core_count
+
+Returns $self->get_cpu_count as a number
+
+If C<get_cpu_count> returns C<2 [8 cores]>, C<get_core_count> returns C<8>
+
+=cut
+
+sub get_core_count {
+    my $self = shift;
+    return $self->{_ncore};
+    } # get_core_count
 
 =head2 si_uname (@args)
 

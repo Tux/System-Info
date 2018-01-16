@@ -100,6 +100,7 @@ C<sysinfo_hash> returns a hash reference with basic system information, like:
 
   { cpu       => 'Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz (GenuineIntel 2700MHz)',
     cpu_count => '1 [8 cores]',
+    cpu_cores => 8,
     cpu_type  => 'x86_64',
     distro    => 'openSUSE Tumbleweed 20171030',
     hostname  => 'foobar',
@@ -115,8 +116,9 @@ sub sysinfo_hash {
     return {
 	hostname  => $si->{_host},
 	cpu       => $si->{_cpu},
-	cpu_count => $si->{_ncpu},
 	cpu_type  => $si->{_cpu_type},
+	cpu_count => $si->{_ncpu},
+	cpu_cores => $si->{_ncore},
 	os        => $si->{_os},
 	osname    => $si->{__osname},
 	osvers    => $si->{__osvers},

@@ -5,7 +5,7 @@ use warnings;
 
 $|++;
 
-use Test::More tests => 68;
+use Test::More tests => 69;
 use Test::NoWarnings;
 my $verbose = 0;
 
@@ -49,7 +49,7 @@ ok defined &si_uname, "si_uname imported";
     ok (my $si_hash = sysinfo_hash (), "sysinfo_hash function");
     ok (ref $si, "Returns a ref");
     ok (defined $si_hash->{$_}, "Element $_ present and set") for
-	qw( cpu cpu_count cpu_type distro hostname os osname osvers );
+	qw( cpu cpu_count cpu_cores cpu_type distro hostname os osname osvers );
     }
 
 {   my $si = System::Info->new;
