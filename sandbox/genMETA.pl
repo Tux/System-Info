@@ -71,7 +71,7 @@ provides:
         version:         0.050
     System::Info::HPUX:
         file:            lib/System/Info/HPUX.pm
-        version:         0.050
+        version:         0.051
     System::Info::Irix:
         file:            lib/System/Info/Irix.pm
         version:         0.050

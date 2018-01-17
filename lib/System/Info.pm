@@ -122,7 +122,8 @@ sub sysinfo_hash {
 	os        => $si->{_os},
 	osname    => $si->{__osname},
 	osvers    => $si->{__osvers},
-	distro    => $si->{__distro},
+	distro    => $si->{__distro}
+		  || join " " => $si->{__osname}, $si->{__osvers},
 	};
     } # sysinfo
 
