@@ -80,6 +80,14 @@ t/etc/centos-7.3/os-release
 t/etc/centos-7.3/redhat-release
 t/etc/centos-7.3/system-release
 t/etc/centos-7.3/system-release-cpe
+t/etc/centos-7.4/centos-release
+t/etc/centos-7.4/centos-release-upstream
+t/etc/centos-7.4/DISTNAME
+t/etc/centos-7.4/issue
+t/etc/centos-7.4/os-release
+t/etc/centos-7.4/redhat-release
+t/etc/centos-7.4/system-release
+t/etc/centos-7.4/system-release-cpe
 t/etc/debian-jessie-8/debian_version
 t/etc/debian-jessie-8/DISTNAME
 t/etc/debian-jessie-8/issue
