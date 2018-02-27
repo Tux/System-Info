@@ -1,3 +1,6 @@
+0.058	- 2018-02-27,  H.Merijn Brand
+    * Include Windows build number in OS version
+
 0.057	- 2018-02-11,  H.Merijn Brand
     * Add VERSION_ID to distroname if set
     * Add DragonFly (PR#2 - xenu)

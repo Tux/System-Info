@@ -86,7 +86,7 @@ provides:
         version:         0.050
     System::Info::Windows:
         file:            lib/System/Info/Windows.pm
-        version:         0.050
+        version:         0.051
 requires:
     perl:                5.008003
     POSIX:               0
