@@ -3,12 +3,15 @@
 use 5.16.2;
 use warnings;
 
+our $VERSION = "1.03 - 20180301";
+
 sub usage {
     my $err = shift and select STDERR;
     say "usage: $0 [--list]";
     exit $err;
     } # usage
 
+use blib;
 use Cwd;
 use LWP;
 use LWP::UserAgent;
@@ -21,6 +24,7 @@ use Test::More;
 use Getopt::Long qw(:config bundling passthrough);
 GetOptions (
     "help|?"	=> sub { usage (0); },
+    "V|version"	=> sub { say $0 =~ s{.*/}{}r, " [$VERSION]"; exit 0; },
     "a|all!"	=> \my $opt_a,	# Also build for known FAIL (they might have fixed it)
     "l|list!"	=> \my $opt_l,
     ) or usage (1);
@@ -34,7 +38,8 @@ diag ("Testing used-by for $tm\n");
 my %tm = map { $_ => 1 } qw( );
 
 $| = 1;
-$ENV{AUTOMATED_TESTING} = 1;
+$ENV{AUTOMATED_TESTING}   = 1;
+$ENV{PERL_USE_UNSAFE_INC} = 1; # My modules are not responsible
 # Skip all dists that
 # - are FAIL not due to the mudule being tested (e.g. POD or signature mismatch)
 # - that require interaction (not dealt with in distroprefs or %ENV)
@@ -232,7 +237,6 @@ if ($opt_l) {
     }
 
 my %rslt;
-#$ENV{AUTOMATED_TESTING} = 1;
 foreach my $m (sort keys %tm) {
     my $mod = CPAN::Shell->expand ("Module", "/$m/") or next;
     # diag $m;
