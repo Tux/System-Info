@@ -59,7 +59,7 @@ provides:
         version:         0.050
     System::Info::BSD:
         file:            lib/System/Info/BSD.pm
-        version:         0.050
+        version:         0.051
     System::Info::Cygwin:
         file:            lib/System/Info/Cygwin.pm
         version:         0.050
