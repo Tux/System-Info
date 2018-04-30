@@ -1,14 +1,18 @@
 #! perl -w
 use strict;
+use Test::More tests =>  1;
 
-use Test::Pod::Coverage;
+SKIP: {
+    skip 'Test::Pod::Coverage not installed', 1
+        unless eval { require Test::Pod::Coverage; };
 
-my @options = sort {
-    length($b) <=> length($a) ||
-    $a cmp $b
-} map {chomp($_); $_} <DATA>;
+    my @options = sort {
+        length($b) <=> length($a) ||
+        $a cmp $b
+    } map {chomp($_); $_} <DATA>;
 
-all_pod_coverage_ok({trustme => \@options});
+    all_pod_coverage_ok({trustme => \@options});
+}
 
 
 __DATA__
