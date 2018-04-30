@@ -10,7 +10,7 @@ if ($@ || $] < 5.010) {
     }
 eval "use Test::MinimumVersion";
 if ($@) {
-    print "1..0 # Test::MinimumVersion required for compatability tests\n";
+    print "1..0 # Test::MinimumVersion required for compatibility tests\n";
     exit 0;
     }
 
