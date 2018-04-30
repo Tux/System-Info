@@ -16,6 +16,6 @@ if ($@) {
 
 my @f = sort glob ("t/*"), glob ("xt/*"), glob ("*.pm"), glob ("*.PL");
 
-all_minimum_version_ok (5.008003, { paths => [ @f ]});
+all_minimum_version_ok (5.008003, {paths => [@f]});
 
 done_testing ();
