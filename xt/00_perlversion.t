@@ -10,12 +10,12 @@ if ($@ || $] < 5.010) {
     }
 eval "use Test::MinimumVersion";
 if ($@) {
-    print "1..0 # Test::MinimumVersion required for compatability tests\n";
+    print "1..0 # Test::MinimumVersion required for compatibility tests\n";
     exit 0;
     }
 
 my @f = sort glob ("t/*"), glob ("xt/*"), glob ("*.pm"), glob ("*.PL");
 
-all_minimum_version_ok (5.008003, { paths => [ @f ]});
+all_minimum_version_ok (5.008003, {paths => [@f]});
 
 done_testing ();
