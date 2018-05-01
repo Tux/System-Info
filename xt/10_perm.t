@@ -1,3 +1,7 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
 eval "use Test::PAUSE::Permissions";
  
 if ($@ || $] < 5.018) {

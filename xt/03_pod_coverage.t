@@ -1,19 +1,20 @@
-#! perl -w
+#!/usr/bin/perl
+
 use strict;
-use Test::More tests => 1;
+use warnings;
+use Test::More;
 
-SKIP: {
-    skip 'Test::Pod::Coverage not installed', 1
-	unless eval { require Test::Pod::Coverage; };
+if (eval { require Test::Pod::Coverage; }) {
+    chomp (my @opt = sort { length ($b) <=> length ($a) || $a cmp $b } <DATA>);
 
-    my @options =
-	sort { length ($b) <=> length ($a) || $a cmp $b }
-	map { chomp ($_); $_ } <DATA>;
-
-    all_pod_coverage_ok ({trustme => \@options});
+    Test::Pod::Coverage::all_pod_coverage_ok ({ trustme => \@opt });
     }
+else {
+    ok (1, "Test::Pod::Coverage not installed, skipping tests");
+    }
+done_testing ();
 
-__DATA__
+__END__
 adir
 archive
 archiver_config

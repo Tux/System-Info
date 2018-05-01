@@ -1,10 +1,14 @@
-#! /usr/bin/perl -w
+#!/usr/bin/perl
+
 use strict;
-use Test::More tests => 1;
+use warnings;
+use Test::More;
 
-SKIP: {
-    skip 'Test::Pod not installed', 1
-	unless eval { require Test::Pod; };
-
-    all_pod_files_ok ();
+if (eval { require Test::Pod; }) {
+    Test::Pod::all_pod_files_ok ();
     }
+else {
+    ok (1, "Test::Pod not installed, skipping tests");
+    }
+
+done_testing ();
