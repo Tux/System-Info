@@ -1,4 +1,7 @@
-0.058	- 2018-04-30,  H.Merijn Brand
+0.059	- 2018-05-01,  H.Merijn Brand
+    * 
+
+0.058	- 2018-05-01,  H.Merijn Brand
     * Include Windows build number in OS version
     * Git repo has CSV with summary from distrowatch
     * Add openSUSE TumbleWeed 2018-04
