@@ -9,6 +9,7 @@ use LWP;
 use LWP::UserAgent;
 use WWW::Mechanize;
 use HTML::TreeBuilder;
+use Text::Wrap;
 
 my $ua = LWP::UserAgent->new;
 $ua->agent ("Opera/11.10");
@@ -40,6 +41,7 @@ my @dist;
 #say "@dist";
 @dist or die "Cannot get list of recorded distributions\n";
 
+my %n;
 my @csv = ([ "dist name", "dist version ", "release date", "perl version" ]);
 foreach my $dist (@dist) {
     my @tbl = page ("http://distrowatch.org/table.php?distribution=$dist", "table");
@@ -94,11 +96,54 @@ foreach my $dist (@dist) {
 	map  { $_->look_down (_tag => "tr") }
 	@tbl or next;
 
-    push @csv, [ $dist, $vsn[$_], $rdt[$_], $perl[$_] ] for 0 .. $#vsn;
+    for (0 .. $#vsn) {
+	push @csv, [ $dist, $vsn[$_], $rdt[$_], $perl[$_] ];
+	push @{$n{$dist}}, [ $vsn[$_], $perl[$_] ];
+	}
     }
 
 csv (in => \@csv, out => "dist-perl.csv");
 
+open my $gh, "-|", "git", "show", "HEAD:sandbox/dist-perl.csv";
+my %o;
+my $ao = csv (
+    in      => $gh,
+    headers => [qw( dist version date perl )],
+    on_in   => sub {
+	$_{dist} =~ m/dist.name/i or
+	    push @{$o{$_{dist}}}, [ $_{version}, $_{perl} ];
+	},
+    );
+close $gh;
+
+my %d;
+foreach my $dn (sort keys %n) {
+    $dn =~ m/dist.name/i and next;
+    unless (exists $o{$dn}) {
+	$d{new}{$dn}++;
+	next;
+	}
+    my $n = $n{$dn};
+    my $o = delete $o{$dn};
+    if ($n->[0][0] ne $o->[0][0] or $n->[0][1] ne $o->[0][1]) {
+	$d{upd}{$dn}++;
+	next;
+	}
+    }
+$d{old}{$_}++ for keys %o;
+
+sub modline {
+    my ($tag, $dnr) = @_;
+    my $dst = join ", " => sort keys %$dnr;
+    wrap "\x{2022} ", "  ", $tag . ($dst || "-");
+    } # modline
+
+binmode STDOUT, ":encoding(utf-8)";
+$Text::Wrap::columns = 79;
+say "Update distro list\n";
+say modline "Added   ", $d{new};
+say modline "Removed ", $d{old};
+say modline "Updated ", $d{upd};
 __END__
 SUSE distributions (SLES)
 
