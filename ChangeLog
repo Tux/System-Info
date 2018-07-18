@@ -1,5 +1,5 @@
-0.059	- 2018-05-01,  H.Merijn Brand
-    * 
+0.059	- 2018-07-18,  H.Merijn Brand
+    * Add CentOS 7.5
 
 0.058	- 2018-05-01,  H.Merijn Brand
     * Include Windows build number in OS version
