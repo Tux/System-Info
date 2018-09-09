@@ -2,6 +2,7 @@
     * Add CentOS 7.5
     * Add DSM-6.2
     * Add openSUSE-42.3
+    * Add openSUSE-15.0
 
 0.058	- 2018-05-01,  H.Merijn Brand
     * Include Windows build number in OS version
