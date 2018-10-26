@@ -111,6 +111,9 @@ Darwin
 $ uname -v
 Darwin Kernel Version 16.5.0: Fri Mar  3 16:52:33 PST 2017; root:xnu-3789.51.2~3/RELEASE_X86_64
 
+=head1 SEE ALSO
+
+Mac::OSVersion
 
 =head1 COPYRIGHT AND LICENSE
 

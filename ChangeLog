@@ -1,8 +1,9 @@
-0.059	- 2018-09-26,  H.Merijn Brand
+0.059	- 2018-10-26,  H.Merijn Brand
     * Add CentOS 7.5
     * Add DSM-6.2
     * Add openSUSE-42.3
     * Add openSUSE-15.0
+    * Add Mac::OSVersion to Darwin's SEE ALSO
 
 0.058	- 2018-05-01,  H.Merijn Brand
     * Include Windows build number in OS version
