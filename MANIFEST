@@ -105,6 +105,14 @@ t/etc/centos-7.5/os-release
 t/etc/centos-7.5/redhat-release
 t/etc/centos-7.5/system-release
 t/etc/centos-7.5/system-release-cpe
+t/etc/centos-7.6/centos-release
+t/etc/centos-7.6/centos-release-upstream
+t/etc/centos-7.6/DISTNAME
+t/etc/centos-7.6/issue
+t/etc/centos-7.6/os-release
+t/etc/centos-7.6/redhat-release
+t/etc/centos-7.6/system-release
+t/etc/centos-7.6/system-release-cpe
 t/etc/debian-jessie-8/debian_version
 t/etc/debian-jessie-8/DISTNAME
 t/etc/debian-jessie-8/issue
