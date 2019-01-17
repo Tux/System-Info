@@ -230,6 +230,13 @@ t/etc/oracle-7.2/os-release
 t/etc/oracle-7.2/redhat-release
 t/etc/oracle-7.2/system-release
 t/etc/oracle-7.2/system-release-cpe
+t/etc/oracle-7.6/DISTNAME
+t/etc/oracle-7.6/issue
+t/etc/oracle-7.6/oracle-release
+t/etc/oracle-7.6/os-release
+t/etc/oracle-7.6/redhat-release
+t/etc/oracle-7.6/system-release
+t/etc/oracle-7.6/system-release-cpe
 t/etc/raspbian-8/debian_version
 t/etc/raspbian-8/DISTNAME
 t/etc/raspbian-8/issue
