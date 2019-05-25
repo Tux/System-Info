@@ -15,3 +15,11 @@ perl:
   - "5.8"
 env:
   - AUTOMATED_TESTING=1
+install:
+  - cpanm --quiet Test::NoWarnings
+notifications:
+  irc:
+    channels:
+      - "irc.perl.org#csv"
+    on_success: always
+    on_failure: always
