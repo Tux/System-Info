@@ -16,6 +16,7 @@ lib/System/Info/VMS.pm
 lib/System/Info/Windows.pm
 Makefile.PL
 MANIFEST
+cpanfile
 README
 examples/sysinfo.pl
 t/distname.t

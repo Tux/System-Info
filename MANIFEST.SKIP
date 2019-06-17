@@ -1,9 +1,9 @@
 \.svn
 ~$
 \.swp$
-.aspell.local.pws
-.releaserc
-.gitignore
+\.aspell.local.pws
+\.releaserc
+\.gitignore
 xt/
 klad/
 contrib/
@@ -27,3 +27,4 @@ sandbox/
 \.tgz$
 \.tbz$
 \.travis.yml
+\.whitesource
