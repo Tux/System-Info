@@ -1,3 +1,6 @@
+0.060	- 2019-07-11,  H.Merijn Brand
+    * Use sysctl on Darwin
+
 0.059	- 2019-07-11,  H.Merijn Brand
     * Add CentOS 7.5
     * Add DSM-6.2
