@@ -38,7 +38,8 @@ sub prepare_sysinfo {
     my $model = $system_profiler->{"machine name"} ||
 		$system_profiler->{"machine model"};
 
-    my $ncpu = $scl->{"hw.ncpu"} || $system_profiler->{"number of cpus"};
+    my $ncpu = # $scl->{"hw.ncpu"} ||
+	$system_profiler->{"number of cpus"};
     $system_profiler->{"total number of cores"} and
 	$ncpu .= " [$system_profiler->{'total number of cores'} cores]";
 
