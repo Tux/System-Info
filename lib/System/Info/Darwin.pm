@@ -5,7 +5,7 @@ use warnings;
 
 use base "System::Info::BSD";
 
-our $VERSION = "0.052";
+our $VERSION = "0.053";
 
 =head1 NAME
 
@@ -43,6 +43,8 @@ sub prepare_sysinfo {
 	if $system_profiler->{"cpu type"};
     $self->{__cpu}       = "$model ($system_profiler->{'cpu speed'})";
     $self->{__cpu_count} = $ncpu;
+
+    chomp ($self->{__osvers} = `sw_vers -productVersion`);
 
     return $self;
     } # prepare_sysinfo
