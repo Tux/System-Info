@@ -44,7 +44,7 @@ sub prepare_sysinfo {
 
     $self->{__cpu_type}  = $system_profiler->{"cpu type"}
 	if $system_profiler->{"cpu type"};
-    $self->{__cpu}       = $scl->{"machdep.cpu.brand_string"} ||
+    $self->{__cpu}       = # $scl->{"machdep.cpu.brand_string"} ||
 	"$model ($system_profiler->{'cpu speed'})";
     $self->{__cpu_count} = $ncpu;
     $scl->{"machdep.cpu.core_count"} and
