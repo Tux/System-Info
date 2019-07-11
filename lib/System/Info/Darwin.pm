@@ -44,7 +44,7 @@ sub prepare_sysinfo {
     $self->{__cpu}       = "$model ($system_profiler->{'cpu speed'})";
     $self->{__cpu_count} = $ncpu;
 
-    chomp ($self->{__osvers} = `sw_vers -productVersion`);
+    chomp ($self->{__osvers} = `sw_vers -productVersion` || "");
 
     return $self;
     } # prepare_sysinfo

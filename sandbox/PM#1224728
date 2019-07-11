@@ -1,0 +1,52 @@
+https://www.perlmonks.org/?node_id=1224728
+
+Hi Tux, it looks like there 'osvers' also means 'build version', rather
+than 'OS version,' and the string that the OP needs ("10.13") is buried
+in the 'os' value. Of course one could fish it out of there, but in this
+case I think I prefer the simplicity of a shell call:
+
+  qx/sw_vers -productVersion/.
+
+If the function had to be portable, I might use the module you show, but
+with the parsing code needed for each OS, it seems like one might as well
+have conditionally executed shell calls.
+
+darwin01:System-Info-git tux$ perl -Mblib examples/sysinfo.pl  -v9
+Distname             : darwin01.local darwin - 17.0.0 (Mac OS X - macOS 10.13 (17A365)) Mac mini (2 GHz) 1 [2 cores] x86_64
+Hostname             : darwin01.local
+Number of CPU's      : 1 [2 cores]
+Processor type       : x86_64
+Processor description: Mac mini (2 GHz)
+OS and version       : darwin - 17.0.0 (Mac OS X - macOS 10.13 (17A365))
+bless ({
+    __cpu            => 'Mac mini (2 GHz)',
+    __cpu_count      => '1 [2 cores]',
+    __cpu_type       => 'x86_64',
+    __hostname       => 'darwin01.local',
+    __os             => 'darwin - 17.0.0 (Mac OS X - macOS 10.13 (17A365))',
+    __osname         => 'Darwin',
+    __osvers         => '10.13',
+    __system_profiler => {
+        'boot rom version' => 'VirtualBox',
+        'cpu speed'      => '2 GHz',
+        'cpu type'       => 'x86_64',
+        hardware         => 'Hardware Overview:',
+        'kernel version' => 'Darwin 17.0.0',
+        'l3 cache'       => '12 MB',
+        'machine model'  => 'Macmini5,3',
+        'machine name'   => 'Mac mini',
+        memory           => '2 GB',
+        'number of cpus' => 1,
+        software         => 'System Software Overview:',
+        'system version' => 'macOS 10.13 (17A365)',
+        'time since boot' => '151 days 7:49',
+        'total number of cores' => 2
+        },
+    _cpu             => 'Mac mini (2 GHz)',
+    _cpu_type        => 'x86_64',
+    _distro          => 'Darwin',
+    _host            => 'darwin01.local',
+    _ncore           => 2,
+    _ncpu            => '1 [2 cores]',
+    _os              => 'darwin - 17.0.0 (Mac OS X - macOS 10.13 (17A365))'
+    }, 'System::Info::Darwin' )
