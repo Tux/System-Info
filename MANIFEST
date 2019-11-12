@@ -254,6 +254,13 @@ t/etc/oracle-7.6/os-release
 t/etc/oracle-7.6/redhat-release
 t/etc/oracle-7.6/system-release
 t/etc/oracle-7.6/system-release-cpe
+t/etc/oracle-7.7/DISTNAME
+t/etc/oracle-7.7/issue
+t/etc/oracle-7.7/oracle-release
+t/etc/oracle-7.7/os-release
+t/etc/oracle-7.7/redhat-release
+t/etc/oracle-7.7/system-release
+t/etc/oracle-7.7/system-release-cpe
 t/etc/raspbian-8/debian_version
 t/etc/raspbian-8/DISTNAME
 t/etc/raspbian-8/issue

@@ -3,6 +3,7 @@
     * Compare to Devel::Platform::Info
     * Add CentOS-7.7
     * Add openSUSE Leap 15.1
+    * Add Oracle Linux 7.7
 
 0.059	- 2019-07-11,  H.Merijn Brand
     * Add CentOS 7.5
