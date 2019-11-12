@@ -66,7 +66,7 @@ provides:
         version:         0.050
     System::Info::Darwin:
         file:            lib/System/Info/Darwin.pm
-        version:         0.053
+        version:         0.054
     System::Info::Haiku:
         file:            lib/System/Info/Haiku.pm
         version:         0.050
@@ -99,7 +99,7 @@ test_requires:
     Test::More:          0.88
     Test::NoWarnings:    0
 test_recommends:
-    Test::More:          1.302164
+    Test::More:          1.302168
 resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/Tux/System-Info

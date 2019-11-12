@@ -1,4 +1,4 @@
-0.060	- 2019-09-25,  H.Merijn Brand
+0.060	- 2019-11-12,  H.Merijn Brand
     * Use sysctl on Darwin
     * Compare to Devel::Platform::Info
     * Add CentOS-7.7
