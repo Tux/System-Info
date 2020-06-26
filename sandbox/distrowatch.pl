@@ -3,6 +3,16 @@
 use 5.18.2;
 use warnings;
 
+our $VERSION = "0.04 - 20200626";
+our $CMD = $0 =~ s{.*/}{}r;
+
+sub usage {
+    my $err = shift and select STDERR;
+    say "usage: $CMD [-d n]";
+    say "   -d 500 --delay=500   Set delay between calls in ms";
+    exit $err;
+    } # usage
+
 BEGIN { $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0; }
 use CSV;
 use LWP;
@@ -10,12 +20,24 @@ use LWP::UserAgent;
 use WWW::Mechanize;
 use HTML::TreeBuilder;
 use Text::Wrap;
+use Time::HiRes  qw( usleep);
+use Getopt::Long qw(:config bundling);
+GetOptions (
+    "help|?"		=> sub { usage (0); },
+    "V|version"		=> sub { say "$CMD [$VERSION]"; exit 0; },
 
+    "d|delay=i"		=> \(my $delay = 500),
+
+    "v|verbose:2"	=> \(my $opt_v = 1),
+    ) or usage (1);
+
+$| = 1;
 my $ua = LWP::UserAgent->new;
 $ua->agent ("Opera/11.10");
 
 sub page {
     my ($url, $tag, @options) = @_;
+    $opt_v > 4 and say "Fetch $url";
     my $rsp = $ua->request (HTTP::Request->new (GET => $url));
     unless ($rsp->is_success) {
 	warn "get failed: ", $rsp->status_line, "\n";
@@ -30,7 +52,7 @@ sub page {
     } # page
 
 my @dist;
-{   my @dw = page ("http://distrowatch.org/table.php",
+{   my @dw = page ("https://distrowatch.org/table.php",
 		   "select", name => "distribution") or exit;
     my %os;
     foreach my $s (@dw) {
@@ -40,11 +62,16 @@ my @dist;
     }
 #say "@dist";
 @dist or die "Cannot get list of recorded distributions\n";
+$opt_v and say "Fetch info for ", scalar @dist, " distributions";
 
 my %n;
 my @csv = ([ "dist name", "dist version ", "release date", "perl version" ]);
 foreach my $dist (@dist) {
-    my @tbl = page ("http://distrowatch.org/table.php?distribution=$dist", "table");
+    if ($opt_v) {
+	print $opt_v > 1 ? "$dist ...\n" : ".";
+	}
+    usleep ($delay * 1000);
+    my @tbl = page ("https://distrowatch.org/table.php?distribution=$dist", "table");
 
     # We need two tables, one with the dist release info
     #     <table>
@@ -101,6 +128,7 @@ foreach my $dist (@dist) {
 	push @{$n{$dist}}, [ $vsn[$_], $perl[$_] ];
 	}
     }
+$opt_v == 1 and say "";
 
 csv (in => \@csv, out => "dist-perl.csv");
 
