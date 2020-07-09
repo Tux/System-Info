@@ -1,4 +1,4 @@
-0.060	- 2020-05-30,  H.Merijn Brand
+0.060	- 2020-07-09,  H.Merijn Brand
     * Use sysctl on Darwin
     * Compare to Devel::Platform::Info
     * Add CentOS-7.7
@@ -8,6 +8,7 @@
     * It's 2020
     * Add Oracle Linux 7.8
     * Prevent false negative CPANTESTERS fail reports
+    * Add CentOS 8.2
 
 0.059	- 2019-07-11,  H.Merijn Brand
     * Add CentOS 7.5
