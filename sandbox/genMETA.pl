@@ -103,6 +103,7 @@ test_recommends:
 resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/Tux/System-Info
+    bugtracker:          https://github.com/Tux/System-Info/issues
     IRC:                 irc://irc.perl.org/#perl-qa
 meta-spec:
     version:             1.4
