@@ -1,3 +1,6 @@
+0.061	- 2021-01-01,  H.Merijn Brand
+    * It's 2021
+
 0.060	- 2020-12-21,  H.Merijn Brand
     * Use sysctl on Darwin
     * Compare to Devel::Platform::Info
