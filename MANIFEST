@@ -329,6 +329,10 @@ t/etc/raspbian-9/debian_version
 t/etc/raspbian-9/DISTNAME
 t/etc/raspbian-9/issue
 t/etc/raspbian-9/os-release
+t/etc/raspbian-10/debian_version
+t/etc/raspbian-10/DISTNAME
+t/etc/raspbian-10/issue
+t/etc/raspbian-10/os-release
 t/etc/rhel-4.2/DISTNAME
 t/etc/rhel-4.2/issue
 t/etc/rhel-4.2/redhat-release

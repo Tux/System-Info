@@ -1,6 +1,7 @@
 0.061	- 2021-03-02,  H.Merijn Brand
     * It's 2021
-    * Add debian-buster 10.8
+    * Add Debian Buster 10.8
+    * Add Raspbian 10.4
 
 0.060	- 2020-12-21,  H.Merijn Brand
     * Use sysctl on Darwin
