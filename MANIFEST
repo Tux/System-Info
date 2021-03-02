@@ -164,6 +164,10 @@ t/etc/centos-8.2/os-release
 t/etc/centos-8.2/redhat-release
 t/etc/centos-8.2/system-release
 t/etc/centos-8.2/system-release-cpe
+t/etc/debian-buster/debian_version
+t/etc/debian-buster/DISTNAME
+t/etc/debian-buster/issue
+t/etc/debian-buster/os-release
 t/etc/debian-jessie-8/debian_version
 t/etc/debian-jessie-8/DISTNAME
 t/etc/debian-jessie-8/issue
