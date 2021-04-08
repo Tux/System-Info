@@ -168,6 +168,10 @@ t/etc/debian-buster-10.8/debian_version
 t/etc/debian-buster-10.8/DISTNAME
 t/etc/debian-buster-10.8/issue
 t/etc/debian-buster-10.8/os-release
+t/etc/debian-buster-10.9/debian_version
+t/etc/debian-buster-10.9/DISTNAME
+t/etc/debian-buster-10.9/issue
+t/etc/debian-buster-10.9/os-release
 t/etc/debian-jessie-8/debian_version
 t/etc/debian-jessie-8/DISTNAME
 t/etc/debian-jessie-8/issue
