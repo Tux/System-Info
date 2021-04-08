@@ -97,7 +97,7 @@ build_requires:
     perl:                5.008
 test_requires:
     Test::More:          0.88
-    Test::NoWarnings:    0
+    Test::Warnings:      0
 test_recommends:
     Test::More:          1.302183
 resources:
