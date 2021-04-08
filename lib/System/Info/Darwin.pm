@@ -51,7 +51,9 @@ sub prepare_sysinfo {
     $scl->{"machdep.cpu.core_count"} and
 	$self->{_ncore}  = $scl->{"machdep.cpu.core_count"};
 
-    chomp ($self->{__osvers} = `sw_vers -productVersion` || "");
+    my @swv = grep { -x } map { "$_/sw_vers" } grep { -d } split m/:+/ => $ENV{PATH};
+    my $osv = @swv ? `$swv[0] -productVersion` : "";
+    chomp ($self->{__osvers} = $osv || "");
 
     $self->{__memsize} = $scl->{"hw.memsize"};
 
