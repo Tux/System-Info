@@ -46,7 +46,7 @@ sub new {
     (my $bc = $class) =~ s/.*://;
     $self->{_distro}   = $self->get_dist_name || ($bc eq "Base" ? "" : $bc);
 
-    $self->{_ncore}    = $self->{_ncpu}
+    $self->{_ncore}  ||= $self->{_ncpu}
 	? (sort { $b <=> $a } ($self->{_ncpu} =~ m/(\d+)/g))[0]
 	: $self->{_ncpu};
 

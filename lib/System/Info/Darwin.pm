@@ -25,7 +25,7 @@ sub prepare_sysinfo {
 
     $self->{__os} .= " (Mac OS X)";
 
-    my $scl = __get_sysctl_list () || {};
+    my $scl = __get_sysctl ();
 
     my $system_profiler = __get_system_profiler () or
 	return $self->SUPER::prepare_sysinfo ();
@@ -51,20 +51,27 @@ sub prepare_sysinfo {
     $scl->{"machdep.cpu.core_count"} and
 	$self->{_ncore}  = $scl->{"machdep.cpu.core_count"};
 
-    my @swv = grep { -x } map { "$_/sw_vers" } grep { -d } split m/:+/ => $ENV{PATH};
-    my $osv = @swv ? `$swv[0] -productVersion` : "";
-    chomp ($self->{__osvers} = $osv || "");
+    my $osv = do {
+	local $^W = 0;
+	`sw_vers -productVersion 2>/dev/null`;
+	} || "";
+    chomp ($self->{__osvers} = $osv);
 
     $self->{__memsize} = $scl->{"hw.memsize"};
 
     return $self;
     } # prepare_sysinfo
 
-sub __get_sysctl_list {
-    chomp (my @sl = `sysctl -a 2>/dev/null`) or return;
-    my %h = map { split m/\s*[:=]\s*/, $_, 2 } grep m/[:=]/ => @sl;
-    \%h;
-    } # __get_sysctl_list
+# System::Info::BSD.pm only uses hw
+sub __get_sysctl {
+    my $sysctl_cmd = -x "/sbin/sysctl" ? "/sbin/sysctl" : "sysctl";
+    chomp (my @sysctl = do {
+	local $^W = 0;
+	`$sysctl_cmd -a 2>/dev/null`;
+	});
+    my %sysctl = map { split m/\s*[:=]\s*/, $_, 2 } grep m/[:=]/ => @sysctl;
+    return \%sysctl;
+    } # __get_sysctl
 
 sub __get_system_profiler {
     my $system_profiler_output = do {
