@@ -1,12 +1,14 @@
-0.061	- 2021-04-09,  H.Merijn Brand
+0.061	- 2021-05-05,  H.Merijn Brand
     * It's 2021
     * Add Debian Buster 10.8
     * Add Raspbian 10.4
     * Add FreeBSD 12.2
-    * Switch Test::NoWarnings → Test::Warnings
-    * Add Debian Buster 9.7
+    * Add Debian Stretch 9.7
     * Add Debian Buster 10.9
+    * Switch Test::NoWarnings → Test::Warnings
     * Get more info on Darwin
+    * Add Raspbian 10.9
+    * Add CentOS 8.3
 
 0.060	- 2020-12-21,  H.Merijn Brand
     * Use sysctl on Darwin
