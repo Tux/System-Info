@@ -1,4 +1,4 @@
-0.061	- 2021-06-22,  H.Merijn Brand
+0.061	- 2021-07-06,  H.Merijn Brand
     * It's 2021
     * Add Debian Buster 10.8
     * Add Raspbian 10.4
@@ -12,6 +12,7 @@
     * Add CentOS 8.3
     * Add CentOS 8 Stream
     * Add Rocky Linux 8.4
+    * Mac M1 does not show CPU speed: suppress warnings (issue#7)
 
 0.060	- 2020-12-21,  H.Merijn Brand
     * Use sysctl on Darwin

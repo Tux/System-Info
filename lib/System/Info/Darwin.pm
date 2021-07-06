@@ -5,7 +5,7 @@ use warnings;
 
 use base "System::Info::BSD";
 
-our $VERSION = "0.054";
+our $VERSION = "0.055";
 
 =head1 NAME
 
@@ -109,9 +109,10 @@ sub __get_system_profiler {
 	}
 
     chomp ($system_profiler{"cpu type"} ||= `uname -m`);
-    $system_profiler{"cpu type"} ||= "Unknown";
-    $system_profiler{"cpu type"}   =~ s/PowerPC\s*(\w+).*/macppc$1/;
-    $system_profiler{"cpu speed"}  =~
+    $system_profiler{"cpu type"}  ||= "Unknown";
+    $system_profiler{"cpu type"}    =~ s/PowerPC\s*(\w+).*/macppc$1/;
+    $system_profiler{"cpu speed"} ||= 0; # Mac M1 does not show CPU speed
+    $system_profiler{"cpu speed"}   =~
 	s/(0(?:\.\d+)?)\s*GHz/sprintf "%d MHz", $1 * 1000/e;
 
     return \%system_profiler;
