@@ -99,7 +99,7 @@ test_requires:
     Test::More:          0.88
     Test::Warnings:      0
 test_recommends:
-    Test::More:          1.302186
+    Test::More:          1.302188
 resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/Tux/System-Info
