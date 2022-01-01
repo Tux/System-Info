@@ -259,7 +259,7 @@ alternative to C<$^O>.
 
 =head1 COPYRIGHT AND LICENSE
 
-(c) 2016-2021, Abe Timmerman & H.Merijn Brand, All rights reserved.
+(c) 2016-2022, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
 With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan Burlison,
 Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn, David Cantrell.
