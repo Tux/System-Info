@@ -1,3 +1,7 @@
+0.063	- 2022-03-01,  H.Merijn Brand
+    * Add openSUSE Leap-15.3
+    * Check DSM-7.0.1 update 2
+
 0.062	- 2022-01-01,  H.Merijn Brand
     * Add Rocky-8.5
     * Add Synology DSM-7.0
