@@ -1,7 +1,8 @@
-0.063	- 2022-04-21,  H.Merijn Brand
+0.063	- 2022-04-29,  H.Merijn Brand
     * Add openSUSE Leap-15.3
     * Check DSM-7.0.1 update 2
     * Add openSUSE Leap 15.4 Beta
+    * Add Sys::OsRelease to SEE ALSO
 
 0.062	- 2022-01-01,  H.Merijn Brand
     * Add Rocky-8.5
