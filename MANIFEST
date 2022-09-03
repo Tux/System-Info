@@ -298,6 +298,9 @@ t/etc/netbsd-6.99.24/DISTNAME
 t/etc/netbsd-6.99.24/release
 t/etc/netbsd-7.99.4/DISTNAME
 t/etc/netbsd-7.99.4/release
+t/etc/omnios-11.151042/DISTNAME
+t/etc/omnios-11.151042/os-release
+t/etc/omnios-11.151042/release
 t/etc/openelec-6.95.3/DISTNAME
 t/etc/openelec-6.95.3/issue
 t/etc/openelec-6.95.3/os-release
