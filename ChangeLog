@@ -1,4 +1,4 @@
-0.063	- 2022-09-13,  H.Merijn Brand
+0.063	- 2022-11-18,  H.Merijn Brand
     * Add openSUSE Leap-15.3
     * Check DSM-7.0.1 update 2
     * Add openSUSE Leap 15.4 Beta
@@ -7,6 +7,7 @@
     * Add Rocky-8.6
     * Add Rocky-9.0
     * Add OmniOS-11-151042
+    * Add Rocky-8.7
 
 0.062	- 2022-01-01,  H.Merijn Brand
     * Add Rocky-8.5
