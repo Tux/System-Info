@@ -1,3 +1,6 @@
+0.064	- 2023-05-01,  H.Merijn Brand
+    * Refine requirements based on CVE's
+
 0.063	- 2023-01-06,  H.Merijn Brand
     * Add openSUSE Leap-15.3
     * Check DSM-7.0.1 update 2

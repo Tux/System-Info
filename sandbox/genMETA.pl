@@ -93,13 +93,17 @@ requires:
     POSIX:               0
 configure_requires:
     ExtUtils::MakeMaker: 0
+configure_recommends:
+    ExtUtils::MakeMaker: 7.22
+configure_suggests:
+    ExtUtils::MakeMaker: 7.70
 build_requires:
     perl:                5.008
 test_requires:
     Test::More:          0.88
     Test::Warnings:      0
 test_recommends:
-    Test::More:          1.302191
+    Test::More:          1.302195
 resources:
     license:             http://dev.perl.org/licenses/
     repository:          https://github.com/Tux/System-Info
