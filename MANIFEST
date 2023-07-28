@@ -371,6 +371,10 @@ t/etc/raspbian-buster-10.9/debian_version
 t/etc/raspbian-buster-10.9/DISTNAME
 t/etc/raspbian-buster-10.9/issue
 t/etc/raspbian-buster-10.9/os-release
+t/etc/raspbian-bullseye-11.6/debian_version
+t/etc/raspbian-bullseye-11.6/DISTNAME
+t/etc/raspbian-bullseye-11.6/issue
+t/etc/raspbian-bullseye-11.6/os-release
 t/etc/rhel-4.2/DISTNAME
 t/etc/rhel-4.2/issue
 t/etc/rhel-4.2/redhat-release
