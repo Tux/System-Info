@@ -442,6 +442,15 @@ t/etc/rocky-8.7/rocky-release
 t/etc/rocky-8.7/rocky-release-upstream
 t/etc/rocky-8.7/system-release
 t/etc/rocky-8.7/system-release-cpe
+t/etc/rocky-8.8/centos-release
+t/etc/rocky-8.8/DISTNAME
+t/etc/rocky-8.8/issue
+t/etc/rocky-8.8/os-release
+t/etc/rocky-8.8/redhat-release
+t/etc/rocky-8.8/rocky-release
+t/etc/rocky-8.8/rocky-release-upstream
+t/etc/rocky-8.8/system-release
+t/etc/rocky-8.8/system-release-cpe
 t/etc/rocky-9.0/DISTNAME
 t/etc/rocky-9.0/issue
 t/etc/rocky-9.0/os-release
