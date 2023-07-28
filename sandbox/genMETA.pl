@@ -41,7 +41,7 @@ version:                 VERSION
 abstract:                Basic information about the system
 license:                 perl
 author:
-    - H.Merijn Brand <h.m.brand@xs4all.nl>
+    - H.Merijn Brand <hmbrand.org>
     - Abe Timmerman <abeltje@cpan.org>
 generated_by:            Author
 distribution_type:       module
@@ -78,7 +78,7 @@ provides:
         version:         0.050
     System::Info::Linux:
         file:            lib/System/Info/Linux.pm
-        version:         0.052
+        version:         0.053
     System::Info::Solaris:
         file:            lib/System/Info/Solaris.pm
         version:         0.050
