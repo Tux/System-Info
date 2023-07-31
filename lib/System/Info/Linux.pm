@@ -278,7 +278,10 @@ sub linux_generic {
 
     {	my @tags = ("model name", "vendor_id", "cpu mhz");
 	my %info = map { ($_ => $self->from_cpuinfo ($_)) } @tags;
-	$info{$tags[0]} //= $self->from_cpuinfo ("isa"); # riscv64 -> rv64imafdc
+	unless (defined $info{$tags[0]}) {
+	    # riscv64 -> rv64imafdc
+	    $info{$tags[0]} = $self->from_cpuinfo ("isa");
+	    }
 	$info{$tags[2]} and $info{$tags[2]} = sprintf "%.0fMHz", $info{$tags[2]};
 	my @cpui;
 	if ($info{$tags[0]}) {
