@@ -72,7 +72,7 @@ sub new {
     $^O =~ m/haiku/              and return System::Info::Haiku->new;
     $^O =~ m/hp-?ux/i            and return System::Info::HPUX->new;
     $^O =~ m/irix/i              and return System::Info::Irix->new;
-    $^O =~ m/linux/i             and return System::Info::Linux->new;
+    $^O =~ m/linux|android/i     and return System::Info::Linux->new;
     $^O =~ m/solaris|sunos|osf/i and return System::Info::Solaris->new;
     $^O =~ m/VMS/                and return System::Info::VMS->new;
     $^O =~ m/mswin32|windows/i   and return System::Info::Windows->new;
