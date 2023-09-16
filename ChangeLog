@@ -1,3 +1,6 @@
+0.065	- 2023-09-16,  H.Merijn Brand
+    * Add android to linux detection (pr#10, Dimitrios Kechagias)
+
 0.064	- 2023-07-31,  H.Merijn Brand
     * Refine requirements based on CVE's
     * Filter undefined values in CPU info (issue#9)
