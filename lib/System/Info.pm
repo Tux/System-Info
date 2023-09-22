@@ -109,9 +109,9 @@ C<sysinfo_hash> returns a hash reference with basic system information, like:
     osvers    => '4.13.10-1-default'
     }
 
-The cpu_cores count refers to logical cores. On MacOS there is a C<physical_cores>
-count in addition, it will be the same as C<cpu_cores> for Apple Silicon, but not
-for an Intel Mac with SMT enabled:
+The C<cpu_cores> count refers to logical cores. On MacOS there is also a
+C<physical_cores> count, which will be the same as C<cpu_cores> for Apple Silicon,
+but not for an Intel Mac with SMT enabled:
 
   {
     cpu_cores      => '8',
