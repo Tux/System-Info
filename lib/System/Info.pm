@@ -113,18 +113,17 @@ The C<cpu_cores> count refers to logical cores. On MacOS there is also a
 C<physical_cores> count, which will be the same as C<cpu_cores> for Apple Silicon,
 but not for an Intel Mac with SMT enabled:
 
-  {
-    cpu_cores      => '8',
-    cpu            => 'Quad-Core Intel Core i7 (2 GHz)',
-    physical_cores => '4',
-    os             => 'darwin - 20.6.0 (Mac OS X - macOS 11.7.10 (20G1427))',
-    hostname       => '192.168.1.6',
-    distro         => 'Darwin 11.7.10',
+  { cpu            => 'Quad-Core Intel Core i7 (2 GHz)',
     cpu_count      => '1 [4 cores]',
-    osname         => 'Darwin',
+    cpu_cores      => '8',
+    physical_cores => '4',
     cpu_type       => 'x86_64',
+    distro         => 'Darwin 11.7.10',
+    hostname       => '192.168.1.6',
+    os             => 'darwin - 20.6.0 (Mac OS X - macOS 11.7.10 (20G1427))',
+    osname         => 'Darwin',
     osvers         => '11.7.10'
-  }
+    }
 
 =cut
 

@@ -5,7 +5,7 @@ use warnings;
 
 use base "System::Info::BSD";
 
-our $VERSION = "0.055";
+our $VERSION = "0.056";
 
 =head1 NAME
 
@@ -45,17 +45,15 @@ sub prepare_sysinfo {
     $self->{__cpu}       = $system_profiler->{chip} ||
 	$system_profiler->{"cpu type"};
     $self->{__cpu} .= " ($system_profiler->{'cpu speed'})"
-	if $system_profiler->{'cpu speed'};
+	if $system_profiler->{"cpu speed"};
     $self->{__cpu_type}  = $system_profiler->{arch};
     $self->{__cpu_count} = $ncpu;
     # _ncore reports hyperthreads for other platforms, so it would be
     # hw.logicalcpu (or hw.logicalcpu_max which is the same unless the system
     # has disabled cores).
     # Alternative hw.ncpu is deprecated, keeping for ancient systems.
-    $self->{_ncore}      = $scl->{"hw.logicalcpu"} ||
-	$scl->{"hw.ncpu"};
-    $self->{_phys_core}  = $scl->{"hw.physicalcpu"} ||
-	$scl->{"hw.ncpu"};
+    $self->{_ncore}      = $scl->{"hw.logicalcpu"}  || $scl->{"hw.ncpu"};
+    $self->{_phys_core}  = $scl->{"hw.physicalcpu"} || $scl->{"hw.ncpu"};
 
     my $osv = do {
 	local $^W = 0;
@@ -100,12 +98,12 @@ sub __get_system_profiler {
 
     # convert newer output from Intel core duo
     my %keymap = (
-	"processor name"        => "cpu type",
-	"processor speed"       => "cpu speed",
-	"model name"            => "machine name",
-	"model identifier"      => "machine model",
-	"number of processors"  => "number of cpus",
-	"total number of cores" => "total number of cores",
+	"processor name"	=> "cpu type",
+	"processor speed"	=> "cpu speed",
+	"model name"		=> "machine name",
+	"model identifier"	=> "machine model",
+	"number of processors"	=> "number of cpus",
+	"total number of cores"	=> "total number of cores",
 	);
     for my $newkey (keys %keymap) {
 	my $oldkey = $keymap{$newkey};
@@ -117,7 +115,7 @@ sub __get_system_profiler {
     $system_profiler{"cpu speed"} ||= 0; # Mac M1 does not show CPU speed
     $system_profiler{"cpu speed"}   =~
 	s/(0(?:\.\d+)?)\s*GHz/sprintf "%d MHz", $1 * 1000/e;
-    $system_profiler{"cpu type"} ||= "Unknown";
+    $system_profiler{"cpu type"}  ||= "Unknown";
     $system_profiler{"cpu type"}   =~ s/\s*\([\d.]+\)//
 	if $system_profiler{"cpu speed"};
     chomp ($system_profiler{arch} ||= `uname -m`);

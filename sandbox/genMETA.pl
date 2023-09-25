@@ -66,7 +66,7 @@ provides:
         version:         0.050
     System::Info::Darwin:
         file:            lib/System/Info/Darwin.pm
-        version:         0.055
+        version:         0.056
     System::Info::Haiku:
         file:            lib/System/Info/Haiku.pm
         version:         0.050

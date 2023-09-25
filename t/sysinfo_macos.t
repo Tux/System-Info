@@ -8,8 +8,8 @@ my $not595;
 BEGIN { eval qq{use 5.009005}; $not595 = $@ }
 
 use Test::More $not595
-    ? (skip_all => "This is only version $] (needs 5.9.5)")
-    : (tests    => 5);
+    ? (skip_all	=> "This is only version $] (needs 5.9.5)")
+    : (tests	=> 5);
 use Test::Warnings;
 
 use Carp qw( cluck );
@@ -19,9 +19,9 @@ require System::Info::Darwin;
 
 my %output = (
     m1_macbook_pro => {
-	uname   => "Apple M1 Pro 1 [10 (8 performance and 2 efficiency) cores] arm64",
-	uname_m => "arm64",
-	output => <<"__EOOUT__" },
+	uname	=> "Apple M1 Pro 1 [10 (8 performance and 2 efficiency) cores] arm64",
+	uname_m	=> "arm64",
+	output	=> <<"__EOOUT__" },
 Hardware:
 
     Hardware Overview:
@@ -38,9 +38,9 @@ Hardware:
 __EOOUT__
 
     mini_intel => {
-	uname   => "Intel Core Duo (1.83 GHz) 1 [2 cores] x86_64",
-	uname_m => "x86_64",
-	output  => <<"__EOOUT__" },
+	uname	=> "Intel Core Duo (1.83 GHz) 1 [2 cores] x86_64",
+	uname_m	=> "x86_64",
+	output	=> <<"__EOOUT__" },
 Hardware:
     Hardware Overview:
       Model Name: Mac mini
@@ -57,9 +57,9 @@ Hardware:
 __EOOUT__
 
     ibook_g4 => {
-	uname  => "PowerPC G4 (1.07 GHz) 1 ppc",
-	uname_m => "ppc",
-	output => <<"__EOOUT__" },
+	uname	=> "PowerPC G4 (1.07 GHz) 1 ppc",
+	uname_m	=> "ppc",
+	output	=> <<"__EOOUT__" },
 Hardware:
 
     Hardware Overview:
@@ -76,9 +76,9 @@ Hardware:
 __EOOUT__
 
     macbook_pro => {
-	uname  => "Intel Core 2 Duo (2.4 GHz) 1 [2 cores] x86_64",
-	uname_m => "x86_64",
-	output => <<"__EOOUT__" },
+	uname	=> "Intel Core 2 Duo (2.4 GHz) 1 [2 cores] x86_64",
+	uname_m	=> "x86_64",
+	output	=> <<"__EOOUT__" },
 Hardware:
 
     Hardware Overview:
@@ -105,15 +105,17 @@ our $UNAME_OUTPUT;
 sub fake_qx {
     $DEBUG and cluck ("<$_[0]>");
 
-    $_[0] =~ m{/usr/sbin/system_profiler} ? $SYS_OUTPUT
-		: $_[0] =~ m{uname -m} ? $UNAME_OUTPUT
-		: CORE::readpipe ($_[0]);
+    $_[0] =~ m{/usr/sbin/system_profiler}
+	? $SYS_OUTPUT
+	: $_[0] =~ m{uname -m}
+	    ? $UNAME_OUTPUT
+	    : CORE::readpipe ($_[0]);
     } # fake_qx
 
 BEGIN { *CORE::GLOBAL::readpipe = \&fake_qx }
 
-for my $model (keys %output) {
-    $SYS_OUTPUT = $output{$model}{output};
+foreach my $model (keys %output) {
+    $SYS_OUTPUT   = $output{$model}{output};
     $UNAME_OUTPUT = $output{$model}{uname_m};
 
     local $^O = "Darwin";
