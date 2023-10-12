@@ -41,7 +41,7 @@ version:                 VERSION
 abstract:                Basic information about the system
 license:                 perl
 author:
-    - H.Merijn Brand <hmbrand.org>
+    - H.Merijn Brand <hmbrand@cpan.org>
     - Abe Timmerman <abeltje@cpan.org>
 generated_by:            Author
 distribution_type:       module

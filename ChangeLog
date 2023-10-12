@@ -1,4 +1,4 @@
-0.065	- 2023-09-25,  H.Merijn Brand
+0.065	- 2023-10-12,  H.Merijn Brand
     * Add android to linux detection  (pr#10, Dimitrios Kechagias)
     * Chaches to darwin CPU detection (pr#11, Dimitrios Kechagias)
 
