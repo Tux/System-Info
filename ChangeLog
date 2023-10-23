@@ -1,6 +1,7 @@
-0.065	- 2023-10-12,  H.Merijn Brand
+0.065	- 2023-10-23,  H.Merijn Brand
     * Add android to linux detection  (pr#10, Dimitrios Kechagias)
     * Chaches to darwin CPU detection (pr#11, Dimitrios Kechagias)
+    * Add Rockylinux-9.2
 
 0.064	- 2023-07-31,  H.Merijn Brand
     * Refine requirements based on CVE's
