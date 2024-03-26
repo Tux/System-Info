@@ -281,6 +281,8 @@ t/etc/fedora-27/system-release
 t/etc/fedora-27/system-release-cpe
 t/etc/freebsd-12.2/DISTNAME
 t/etc/freebsd-12.2/os-release
+t/etc/freebsd-13.3/DISTNAME
+t/etc/freebsd-13.3/os-release
 t/etc/get-lsb.pl
 t/etc/get-lsb.sh
 t/etc/mageia-4/DISTNAME
