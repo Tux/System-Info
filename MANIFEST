@@ -729,3 +729,6 @@ t/etc/ubuntu-23.04/os-release
 t/sysinfo.t
 t/sysinfo_macos.t
 t/sysinfo_proc.t
+doc/System::Info.3
+doc/System::Info.html
+doc/System::Info.md

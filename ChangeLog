@@ -1,5 +1,6 @@
 0.066	- 2024-08-30,  H.Merijn Brand
     * Add OpenSUSE 15.5
+    * Add static documentation
 
 0.065	- 2024-08-23,  H.Merijn Brand
     * Add android to linux detection  (pr#10, Dimitrios Kechagias)
