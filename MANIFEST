@@ -300,6 +300,12 @@ t/etc/mageia-4/mandrake-release
 t/etc/mageia-4/mandriva-release
 t/etc/mageia-4/os-release
 t/etc/mageia-4/redhat-release
+t/etc/mint-21.2/debian_version
+t/etc/mint-21.2/DISTNAME
+t/etc/mint-21.2/issue
+t/etc/mint-21.2/lsb-release
+t/etc/mint-21.2/os-release
+t/etc/mint-21.2/upstream-release/lsb-release
 t/etc/nixos-16.09/DISTNAME
 t/etc/nixos-16.09/issue
 t/etc/nixos-16.09/os-release
