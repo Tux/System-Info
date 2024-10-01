@@ -2,6 +2,7 @@
     * Add OpenSUSE 15.5
     * Add static documentation
     * Add Rockylinux-9.4
+    * Add OpenSUSE 15.6
 
 0.065	- 2024-08-23,  H.Merijn Brand
     * Add android to linux detection  (pr#10, Dimitrios Kechagias)
