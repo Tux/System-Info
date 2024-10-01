@@ -20,6 +20,10 @@ cpanfile
 README
 examples/sysinfo.pl
 t/distname.t
+t/etc/alpine-3.19.1/alpine-release
+t/etc/alpine-3.19.1/DISTNAME
+t/etc/alpine-3.19.1/issue
+t/etc/alpine-3.19.1/os-release
 t/etc/centos-5.10/DISTNAME
 t/etc/centos-5.10/issue
 t/etc/centos-5.10/redhat-release

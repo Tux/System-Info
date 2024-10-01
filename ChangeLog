@@ -6,6 +6,7 @@
     * Add Mint-21.2
     * Add Fedora-39 & Fedora-42
     * Add Debian-11.9, 12.5 & 12.7
+    * Add Alpine-3.19.1
 
 0.065	- 2024-08-23,  H.Merijn Brand
     * Add android to linux detection  (pr#10, Dimitrios Kechagias)
