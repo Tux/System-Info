@@ -1,0 +1,45 @@
+System::Info::AIX(3)  User Contributed Perl Documentation System::Info::AIX(3)
+
+NAME
+       System::Info::AIX - Object for specific AIX info.
+
+DESCRIPTION
+   $si->prepare_sysinfo
+       Use os-specific tools to find out more about the system.
+
+   $si->prepare_os
+       Use os-specific tools to find out more about the operating system.
+
+       Abbreviations used in AIX OS version include
+
+        ML   Maintenance Level
+        TL   Technology Level
+        SP   Service Pack
+        CSP  Conclusive/Last SP
+        RD   Release Date (YYWW)
+
+       When the OS version reports as "AIX 5.3.0.0/TL12-05", the 05 is the
+       "SP" number. Newer versions of AIX report using "TL", where older AIX
+       releases report using "ML". See "oslevel -?".
+
+COPYRIGHT AND LICENSE
+       (c) 2016-2024, Abe Timmerman & H.Merijn Brand, All rights reserved.
+
+       With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan
+       Burlison, Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn,
+       David Cantrell.
+
+       This library is free software; you can redistribute it and/or modify it
+       under the same terms as Perl itself.
+
+       See:
+
+       •   <http://www.perl.com/perl/misc/Artistic.html>
+
+       •   <http://www.gnu.org/copyleft/gpl.html>
+
+       This program is distributed in the hope that it will be useful, but
+       WITHOUT ANY WARRANTY; without even the implied warranty of
+       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+perl v5.40.0                      2024-01-04              System::Info::AIX(3)

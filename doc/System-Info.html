@@ -1,0 +1,270 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>System::Info - Factory for system specific information objects</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:hmbrand@cpan.org" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#System%3A%3AInfo-new">System::Info-&gt;new</a></li>
+      <li><a href="#sysinfo">sysinfo</a></li>
+      <li><a href="#sysinfo_hash">sysinfo_hash</a></li>
+      <li><a href="#si_uname-args">si_uname (@args)</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a>
+    <ul>
+      <li><a href="#Sys%3A%3AHostname">Sys::Hostname</a></li>
+      <li><a href="#Unix%3A%3AProcessors">Unix::Processors</a></li>
+      <li><a href="#Sys%3A%3AInfo">Sys::Info</a></li>
+      <li><a href="#Sys%3A%3ACPU">Sys::CPU</a></li>
+      <li><a href="#Devel%3A%3APlatform%3A%3AInfo">Devel::Platform::Info</a></li>
+      <li><a href="#Devel%3A%3ACheckOS">Devel::CheckOS</a></li>
+      <li><a href="#Sys%3A%3AOsRelease">Sys::OsRelease</a></li>
+    </ul>
+  </li>
+  <li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>System::Info - Factory for system specific information objects</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>use System::Info;
+
+my $si = System::Info-&gt;new;
+
+printf &quot;Hostname:              %s\n&quot;, $si-&gt;host;
+printf &quot;Number of CPU&#39;s:       %s\n&quot;, $si-&gt;ncpu;
+printf &quot;Processor type:        %s\n&quot;, $si-&gt;cpu_type; # short
+printf &quot;Processor description: %s\n&quot;, $si-&gt;cpu;      # long
+printf &quot;OS and version:        %s\n&quot;, $si-&gt;os;</code></pre>
+
+<p>or</p>
+
+<pre><code>use System::Info qw( sysinfo );
+printf &quot;[%s]\n&quot;, sysinfo ();</code></pre>
+
+<p>or</p>
+
+<pre><code>$ perl -MSystem::Info=si_uname -le print+si_uname</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>System::Info tries to present system-related information, like number of CPU&#39;s, architecture, OS and release related information in a system-independent way. This releases the user of this module of the need to know if the information comes from Windows, Linux, HP-UX, AIX, Solaris, Irix, or VMS, and if the architecture is i386, x64, pa-risc2, or arm.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<h2 id="System::Info-new">System::Info-&gt;new</h2>
+
+<p>Factory method, with fallback to the information in <code>POSIX::uname ()</code>.</p>
+
+<h2 id="sysinfo">sysinfo</h2>
+
+<p><code>sysinfo</code> returns a string with <code>host</code>, <code>os</code> and <code>cpu_type</code>.</p>
+
+<h2 id="sysinfo_hash">sysinfo_hash</h2>
+
+<p><code>sysinfo_hash</code> returns a hash reference with basic system information, like:</p>
+
+<pre><code>{ cpu       =&gt; &#39;Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz (GenuineIntel 2700MHz)&#39;,
+  cpu_count =&gt; &#39;1 [8 cores]&#39;,
+  cpu_cores =&gt; 8,
+  cpu_type  =&gt; &#39;x86_64&#39;,
+  distro    =&gt; &#39;openSUSE Tumbleweed 20171030&#39;,
+  hostname  =&gt; &#39;foobar&#39;,
+  os        =&gt; &#39;linux - 4.13.10-1-default [openSUSE Tumbleweed 20171030]&#39;,
+  osname    =&gt; &#39;Linux&#39;,
+  osvers    =&gt; &#39;4.13.10-1-default&#39;
+  }</code></pre>
+
+<p>The <code>cpu_cores</code> count refers to logical cores. On MacOS there is also a <code>physical_cores</code> count, which will be the same as <code>cpu_cores</code> for Apple Silicon, but not for an Intel Mac with SMT enabled:</p>
+
+<pre><code>{ cpu            =&gt; &#39;Quad-Core Intel Core i7 (2 GHz)&#39;,
+  cpu_count      =&gt; &#39;1 [4 cores]&#39;,
+  cpu_cores      =&gt; &#39;8&#39;,
+  physical_cores =&gt; &#39;4&#39;,
+  cpu_type       =&gt; &#39;x86_64&#39;,
+  distro         =&gt; &#39;Darwin 11.7.10&#39;,
+  hostname       =&gt; &#39;192.168.1.6&#39;,
+  os             =&gt; &#39;darwin - 20.6.0 (Mac OS X - macOS 11.7.10 (20G1427))&#39;,
+  osname         =&gt; &#39;Darwin&#39;,
+  osvers         =&gt; &#39;11.7.10&#39;
+  }</code></pre>
+
+<h2 id="si_uname-args">si_uname (@args)</h2>
+
+<p>This class gathers most of the <code>uname(1)</code> info, make a comparable version. Takes almost the same arguments:</p>
+
+<pre><code>a for all (can be omitted)
+n for nodename
+s for os name and version
+m for cpu name
+c for cpu count
+p for cpu_type</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p>There are more modules that provide system and/or architectural information.</p>
+
+<p>Where System::Info aims at returning the information that is useful for bug reports, some other modules focus on a single aspect (possibly with way more variables and methods than System::Info does supports), or are limited to use on a specific architecture, like Windows or Linux.</p>
+
+<p>Here are some of the alternatives and how to replace that code with what System::Info offers. Not all returned values will be exactly the same.</p>
+
+<h2 id="Sys::Hostname">Sys::Hostname</h2>
+
+<pre><code>use Sys::Hostname;
+say &quot;Hostname: &quot;, hostname;
+
+-&gt;
+
+use System::Info;
+my $si = System::Info-&gt;new;
+say &quot;Hostname: &quot;, $si-&gt;host;</code></pre>
+
+<p>Sys::Hostname is a CORE module, and will always be available.</p>
+
+<h2 id="Unix::Processors">Unix::Processors</h2>
+
+<pre><code>use Unix::Processors;
+my $up = Unix::Processors-&gt;new;
+say &quot;CPU type : &quot;, $up-&gt;processors-&gt;[0]-&gt;type; # Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz
+say &quot;CPU count: &quot;, $up-&gt;max_physical;          # 4
+say &quot;CPU cores: &quot;, $up-&gt;max_online;            # 8
+say &quot;CPU speed: &quot;, $up-&gt;max_clock;             # 2700
+
+-&gt;
+
+use System::Info;
+my $si = System::Info-&gt;new;
+say &quot;CPU type : &quot;, $si-&gt;cpu;
+say &quot;CPU count: &quot;, $si-&gt;ncpu;
+say &quot;CPU cores: &quot;, $si-&gt;ncore;
+say &quot;CPU speed: &quot;, $si-&gt;cpu =~ s{^.*\b([0-9.]+)\s*[A-Z]Hz.*}{$1}r;</code></pre>
+
+<p>The number reported by max_physical is inaccurate for modern CPU&#39;s</p>
+
+<h2 id="Sys::Info">Sys::Info</h2>
+
+<p>Sys::Info has a somewhat rigid configuration, which causes it to fail installation on e.g. (modern versions of) CentOS and openSUSE Tumbleweed.</p>
+
+<p>It aims at returning a complete set of information, but as I cannot install it on openSUSE Tumbleweed, I cannot test it and show the analogies.</p>
+
+<h2 id="Sys::CPU">Sys::CPU</h2>
+
+<pre><code>use Sys::CPU;
+say &quot;CPU type : &quot;, Sys::CPU::cpu_type;  # Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz
+say &quot;CPU count: &quot;, Sys::CPU::cpu_count; # 8
+say &quot;CPU speed: &quot;, Sys::CPU::cpu_clock; # 2700
+
+-&gt;
+
+use System::Info;
+my $si = System::Info-&gt;new;
+say &quot;CPU type : &quot;, $si-&gt;get_cpu;         # or -&gt;cpu
+say &quot;CPU count: &quot;, $si-&gt;get_core_count;  # or -&gt;ncore
+say &quot;CPU speed: &quot;, $si-&gt;get_cpu =~ s{^.*\b([0-9.]+)\s*[A-Z]Hz.*}{$1}r;</code></pre>
+
+<p>The speed reported by Sys::CPU is the <i>current</i> speed, and it will change from call to call. YMMV.</p>
+
+<p>Sys::CPU is not available on CPAN anymore, but you can still get is from BackPAN.</p>
+
+<h2 id="Devel::Platform::Info">Devel::Platform::Info</h2>
+
+<p><a>Devel::Platform::Info</a> derives information from the files <code>/etc/issue</code>, <code>/etc/.issue</code> and the output of the commands <code>uname -a</code> (and <code>-m</code>, <code>-o</code>, <code>-r</code>, and <code>-s</code>) and <code>lsb_release -a</code>. It returns no information on CPU type, CPU speed, or Memory.</p>
+
+<pre><code>use Devel::Platform::Info;
+my $info = Devel::Platform::Info-&gt;new-&gt;get_info ();
+# { archname =&gt; &#39;x86_64&#39;,
+#   codename =&gt; &#39;n/a&#39;,
+#   is32bit  =&gt; 0,
+#   is64bit  =&gt; 1,
+#   kernel   =&gt; &#39;linux-5.17.4-1-default&#39;,
+#   kname    =&gt; &#39;Linux&#39;,
+#   kvers    =&gt; &#39;5.17.4-1-default&#39;,
+#   osflag   =&gt; &#39;linux&#39;,
+#   oslabel  =&gt; &#39;openSUSE&#39;,
+#   osname   =&gt; &#39;GNU/Linux&#39;,
+#   osvers   =&gt; &#39;20220426&#39;,
+#   }
+
+-&gt;
+
+use System::Info;
+my $si = System::Info-&gt;new;
+my $info = {
+   archname =&gt; $si-&gt;cpu_type,       # x86_64
+   codename =&gt; undef,
+   is32bit  =&gt; undef,
+   is64bit  =&gt; undef,
+   kernel   =&gt; &quot;$^O-&quot;.$si-&gt;_osvers, # linux-5.17.4-1-default
+   kname    =&gt; $si-&gt;_osname,        # Linux
+   kvers    =&gt; $si-&gt;_osvers,        # 5.17.4-1-default
+   osflag   =&gt; $^O,                 # linux
+   oslabel  =&gt; $si-&gt;distro,         # openSUSE Tumbleweed 20220426
+   osname   =&gt; undef,
+   osvers   =&gt; $si-&gt;distro,         # openSUSE Tumbleweed 20220426
+   };</code></pre>
+
+<h2 id="Devel::CheckOS">Devel::CheckOS</h2>
+
+<p>This one does not return the OS information as such, but features an alternative to <code>$^O</code>.</p>
+
+<h2 id="Sys::OsRelease">Sys::OsRelease</h2>
+
+<p>Interface to FreeDesktop.Org&#39;s os-release standard.</p>
+
+<pre><code>use Sys::OsRealease;
+Sys::OsRelease-&gt;init;
+my $i = Sys::OsRelease-&gt;instance;
+say $i-&gt;ansi_color;                 # 0;32
+say $i-&gt;bug_report_url;             # https://bugs.opensuse.org
+say $i-&gt;cpe_name;                   # cpe:/o:opensuse:tumbleweed:20220426
+say $i-&gt;documentation_url;          # https://en.opensuse.org/Portal:Tumbleweed
+say $i-&gt;home_url;                   # https://www.opensuse.org/
+say $i-&gt;id;                         # opensuse-tumbleweed
+say $i-&gt;id_like;                    # opensuse suse
+say $i-&gt;logo;                       # distributor-logo-Tumbleweed
+say $i-&gt;name;                       # openSUSE Tumbleweed
+say $i-&gt;pretty_name;                # openSUSE Tumbleweed
+say $i-&gt;version_id;                 # 20220426</code></pre>
+
+<h1 id="COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</h1>
+
+<p>(c) 2016-2024, Abe Timmerman &amp; H.Merijn Brand, All rights reserved.</p>
+
+<p>With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan Burlison, Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn, David Cantrell.</p>
+
+<p>This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</p>
+
+<p>See:</p>
+
+<ul>
+
+<li><p><a href="http://www.perl.com/perl/misc/Artistic.html">http://www.perl.com/perl/misc/Artistic.html</a></p>
+
+</li>
+<li><p><a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a></p>
+
+</li>
+</ul>
+
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+
+</body>
+
+</html>

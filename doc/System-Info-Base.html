@@ -1,0 +1,179 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>System::Info::Base - Baseclass for system information.</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:hmbrand@cpan.org" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#System%3A%3AInfo%3A%3ABase-new">System::Info::Base-&gt;new()</a></li>
+      <li><a href="#si-prepare_sysinfo">$si-&gt;prepare_sysinfo</a></li>
+      <li><a href="#si-get_os">$si-&gt;get_os</a></li>
+      <li><a href="#si-get_hostname">$si-&gt;get_hostname</a></li>
+      <li><a href="#si-get_cpu_type">$si-&gt;get_cpu_type</a></li>
+      <li><a href="#si-get_cpu">$si-&gt;get_cpu</a></li>
+      <li><a href="#si-get_cpu_count">$si-&gt;get_cpu_count</a></li>
+      <li><a href="#si-get_core_count">$si-&gt;get_core_count</a></li>
+      <li><a href="#si-get_dist_name">$si-&gt;get_dist_name</a></li>
+      <li><a href="#si_uname-args">si_uname (@args)</a></li>
+      <li><a href="#si-old_dump">$si-&gt;old_dump</a></li>
+    </ul>
+  </li>
+  <li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>System::Info::Base - Baseclass for system information.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<dl>
+
+<dt id="cpu">cpu</dt>
+<dd>
+
+</dd>
+<dt id="cpu_type">cpu_type</dt>
+<dd>
+
+</dd>
+<dt id="ncpu">ncpu</dt>
+<dd>
+
+</dd>
+<dt id="os">os</dt>
+<dd>
+
+</dd>
+<dt id="host">host</dt>
+<dd>
+
+</dd>
+</dl>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<h2 id="System::Info::Base-new">System::Info::Base-&gt;new()</h2>
+
+<p>Return a new instance for $^O</p>
+
+<h2 id="si-prepare_sysinfo">$si-&gt;prepare_sysinfo</h2>
+
+<p>This method should be overridden by platform specific subclasses.</p>
+
+<p>The generic information is taken from <code>POSIX::uname()</code>.</p>
+
+<dl>
+
+<dt id="self-_hostname-POSIX::uname-1">$self-&gt;_hostname =&gt; (POSIX::uname)[1]</dt>
+<dd>
+
+</dd>
+<dt id="self-_os-join---POSIX::uname-0-2">$self-&gt;_os =&gt; join &quot; - &quot; =&gt; (POSIX::uname)[0,2]</dt>
+<dd>
+
+</dd>
+<dt id="self-_osname-POSIX::uname-0">$self-&gt;_osname =&gt; (POSIX::uname)[0]</dt>
+<dd>
+
+</dd>
+<dt id="self-_osvers-POSIX::uname-2">$self-&gt;_osvers =&gt; (POSIX::uname)[2]</dt>
+<dd>
+
+</dd>
+<dt id="self-_cpu_type-POSIX::uname-4">$self-&gt;_cpu_type =&gt; (POSIX::uname)[4]</dt>
+<dd>
+
+</dd>
+<dt id="self-_cpu-POSIX::uname-4">$self-&gt;_cpu =&gt; (POSIX::uname)[4]</dt>
+<dd>
+
+</dd>
+<dt id="self-_cpu_count">$self-&gt;_cpu_count =&gt; &quot;&quot;</dt>
+<dd>
+
+</dd>
+</dl>
+
+<h2 id="si-get_os">$si-&gt;get_os</h2>
+
+<p>Returns $self-&gt;_os</p>
+
+<h2 id="si-get_hostname">$si-&gt;get_hostname</h2>
+
+<p>Returns $self-&gt;_hostname</p>
+
+<h2 id="si-get_cpu_type">$si-&gt;get_cpu_type</h2>
+
+<p>Returns $self-&gt;_cpu_type</p>
+
+<h2 id="si-get_cpu">$si-&gt;get_cpu</h2>
+
+<p>Returns $self-&gt;_cpu</p>
+
+<h2 id="si-get_cpu_count">$si-&gt;get_cpu_count</h2>
+
+<p>Returns $self-&gt;_cpu_count</p>
+
+<h2 id="si-get_core_count">$si-&gt;get_core_count</h2>
+
+<p>Returns $self-&gt;get_cpu_count as a number</p>
+
+<p>If <code>get_cpu_count</code> returns <code>2 [8 cores]</code>, <code>get_core_count</code> returns <code>8</code></p>
+
+<h2 id="si-get_dist_name">$si-&gt;get_dist_name</h2>
+
+<p>Returns the name of the distribution.</p>
+
+<h2 id="si_uname-args">si_uname (@args)</h2>
+
+<p>This class gathers most of the <code>uname(1)</code> info, make a comparable version. Takes almost the same arguments:</p>
+
+<pre><code>a for all (can be omitted)
+n for nodename
+s for os name and version
+m for cpu name
+c for cpu count
+p for cpu_type</code></pre>
+
+<h2 id="si-old_dump">$si-&gt;old_dump</h2>
+
+<p>Just a backward compatible way to dump the object (for test suite).</p>
+
+<h1 id="COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</h1>
+
+<p>(c) 2016-2024, Abe Timmerman &amp; H.Merijn Brand, All rights reserved.</p>
+
+<p>With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan Burlison, Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn, David Cantrell.</p>
+
+<p>This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</p>
+
+<p>See:</p>
+
+<ul>
+
+<li><p><a href="http://www.perl.com/perl/misc/Artistic.html">http://www.perl.com/perl/misc/Artistic.html</a></p>
+
+</li>
+<li><p><a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a></p>
+
+</li>
+</ul>
+
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+
+</body>
+
+</html>

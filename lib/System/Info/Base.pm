@@ -13,15 +13,19 @@ System::Info::Base - Baseclass for system information.
 
 =head1 ATTRIBUTES
 
-=head2 cpu
+=over 2
 
-=head2 cpu_type
+=item cpu
 
-=head2 ncpu
+=item cpu_type
 
-=head2 os
+=item ncpu
 
-=head2 host
+=item os
+
+=item host
+
+=back
 
 =head1 DESCRIPTION
 

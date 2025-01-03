@@ -1,0 +1,84 @@
+System:...o::Linux(3) User Contributed Perl DocumentationSystem:...o::Linux(3)
+
+NAME
+       System::Info::Linux - Object for specific Linux info.
+
+DESCRIPTION
+   $si->prepare_sysinfo
+       Use os-specific tools to find out more about the system.
+
+   $si->prepare_os
+       Use os-specific tools to find out more about the operating system.
+
+   $si->linux_generic
+       Check "/proc/cpuinfo" for these keys:
+
+       "processor"  (count occurrence for __cpu_count)
+       "model name" (part of __cpu)
+       "vendor_id"  (part of __cpu)
+       "cpu mhz"    (part of __cpu)
+       "cpu cores"  (add values to add to __cpu_count)
+
+   $si->linux_arm
+       Check "/proc/cpuinfo" for these keys:
+
+       "processor"  (count occurrence for __cpu_count)
+       "Processor" (part of __cpu)
+       "BogoMIPS"  (part of __cpu)
+
+   $si->linux_ppc
+       Check "/proc/cpuinfo" for these keys:
+
+       "processor"  (count occurrence for __cpu_count)
+       "cpu"     (part of __cpu)
+       "machine" (part of __cpu)
+       "clock"   (part of __cpu)
+       "detected" (alters machine if present)
+
+   $si->linux_sparc
+       Check "/proc/cpuinfo" for these keys:
+
+       "processor"  (count occurrence for __cpu_count)
+       "cpu"        (part of __cpu)
+       "Cpu0ClkTck" (part of __cpu)
+
+   $si->linux_s390x
+       Check "/proc/cpuinfo" for these keys:
+
+       "processor"  (count occurrence for __cpu_count)
+       "Processor" (part of __cpu)
+       "BogoMIPS"  (part of __cpu)
+
+   $si->prepare_proc_cpuinfo
+       Read the complete "/proc/cpuinfo".
+
+   $si->count_in_cpuinfo ($regex)
+       Returns the number of lines $regex matches for.
+
+   $si->count_unique_in_cpuinfo ($regex)
+       Returns the number of lines $regex matches for.
+
+   $si->from_cpuinfo ($key)
+       Returns the first value of that key in "/proc/cpuinfo".
+
+COPYRIGHT AND LICENSE
+       (c) 2016-2024, Abe Timmerman & H.Merijn Brand, All rights reserved.
+
+       With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan
+       Burlison, Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn,
+       David Cantrell.
+
+       This library is free software; you can redistribute it and/or modify it
+       under the same terms as Perl itself.
+
+       See:
+
+       •   <http://www.perl.com/perl/misc/Artistic.html>
+
+       •   <http://www.gnu.org/copyleft/gpl.html>
+
+       This program is distributed in the hope that it will be useful, but
+       WITHOUT ANY WARRANTY; without even the implied warranty of
+       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+perl v5.40.0                      2024-08-23             System:...o::Linux(3)

@@ -83,5 +83,7 @@ sub postamble {
 	'	-@cpants_lint.pl $(DISTVNAME).tgz',
 	'	-@rm -f Debian_CPANTS.txt',
 	'',
+	'doc docs:',
+	'	perl doc/make-doc.pl',
 	$min_vsn;
     } # postamble
