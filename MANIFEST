@@ -1,5 +1,6 @@
 ChangeLog
 CONTRIBUTING.md
+SECURITY.md
 lib/System/Info.pm
 lib/System/Info/AIX.pm
 lib/System/Info/Base.pm
