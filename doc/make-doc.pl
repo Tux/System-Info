@@ -203,7 +203,6 @@ else {
 	open  $oh, ">:encoding(utf-8)", $mfn or die "$mfn: $!\n";
 	# nroff / troff / grotty cause double-encoding
 	print $oh encode ("iso-8859-1", decode ("utf-8", $p));
-	#print $oh $p;
 	close $oh;
 	}
     }

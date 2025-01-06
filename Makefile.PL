@@ -53,7 +53,7 @@ sub postamble {
     my $min_vsn = ($] >= 5.010 && -d "xt" && ($ENV{AUTOMATED_TESTING} || 0) != 1)
 	? join "\n" =>
 	    'test ::',
-	    '	-@perl make-doc.pl',
+	    '	-@perl doc/make-doc.pl',
 	    '	-@env TEST_FILES="xt/*.t" make -e test_dynamic',
 	    ''
 	: "";
