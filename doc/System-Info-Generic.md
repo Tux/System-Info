@@ -8,7 +8,7 @@ Just because it's ugly to have instances of the base class.
 
 # COPYRIGHT AND LICENSE
 
-(c) 2016-2024, Abe Timmerman & H.Merijn Brand, All rights reserved.
+(c) 2016-2025, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
 With contributions from Jarkko Hietaniemi, Campo Weijerman, Alan Burlison,
 Allen Smith, Alain Barbet, Dominic Dunlop, Rich Rauenzahn, David Cantrell.

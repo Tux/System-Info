@@ -10,7 +10,7 @@ Use os-specific tools to find out more about the system.
 
 # COPYRIGHT AND LICENSE
 
-(c) 2016-2024, Abe Timmerman & H.Merijn Brand, All rights reserved.
+(c) 2016-2025, Abe Timmerman & H.Merijn Brand, All rights reserved.
 
 With contributions from Jarkko Hietaniemi, Merijn Brand, Campo
 Weijerman, Alan Burlison, Allen Smith, Alain Barbet, Dominic Dunlop,
