@@ -1,4 +1,4 @@
-0.066	- 2024-10-01,  H.Merijn Brand
+0.066	- 2025-01-06,  H.Merijn Brand
     * Add OpenSUSE 15.5
     * Add static documentation
     * Add Rockylinux-9.4
@@ -7,6 +7,7 @@
     * Add Fedora-39 & Fedora-42
     * Add Debian-11.9, 12.5 & 12.7
     * Add Alpine-3.19.1
+    * It's 2025
 
 0.065	- 2024-08-23,  H.Merijn Brand
     * Add android to linux detection  (pr#10, Dimitrios Kechagias)
