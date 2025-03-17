@@ -27,4 +27,4 @@ COPYRIGHT AND LICENSE
        WITHOUT ANY WARRANTY; without even the implied warranty of
        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-perl v5.40.0                      2025-01-06             System::Info::HPUX(3)
+perl v5.40.1                      2025-01-06             System::Info::HPUX(3)
