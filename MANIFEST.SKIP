@@ -29,4 +29,5 @@ sandbox/
 \.tgz$
 \.tbz$
 \.travis.yml
+^\.test_info\.
 \.whitesource
